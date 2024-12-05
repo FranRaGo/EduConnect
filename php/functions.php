@@ -22,7 +22,7 @@
                ($surnames && $surnames === $row['surnames']) || 
                ($gmail && $gmail === $row['gmail'])){
                 // Si hay coincidencia, retorna un array con los datos relevantes del profesor
-                return [$row['id'], $row['name'], $row['surnames'], $row['gmail'], $row['password']];
+                return [$row['id'], $row['name'], $row['surnames'], $row['gmail'], $row['password'],$row['profile_picture'],$row['course_id']];
             }
         }
         // Si no encuentra coincidencias, no retorna nada
@@ -51,7 +51,7 @@
                ($surnames && $surnames === $row['surnames']) || 
                ($gmail && $gmail === $row['gmail'])){
                 // Si hay coincidencia, retorna un array con los datos relevantes del estudiante
-                return [$row['id'], $row['name'], $row['surnames'], $row['gmail'], $row['password']];
+                return [$row['id'], $row['name'], $row['surnames'], $row['gmail'], $row['password'],$row['profile_picture'],$row['course_id']];
             }
         }
 
@@ -66,5 +66,17 @@
 
         // Ejecuta la consulta y devuelve el resultado
         return mysqli_query($connection, $sql);
+    }
+
+    function searchCourses($connection,$id){
+        $sql = 'SELECT title FROM courses WHERE id = '.$id;
+        $query = mysqli_query($connection,$sql);
+
+        if($query && mysqli_num_rows($query) > 0){
+            $row = mysqli_fetch_assoc($query);
+            return $row['title'];
+        }
+
+        return null;
     }
 ?>

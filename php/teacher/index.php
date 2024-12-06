@@ -8,10 +8,10 @@
         header('Location: ../login/login.php');
     }
 
-    $profilePicture = '../../images/default.png';
+    $profilePicture = '../../images/profile_images/default.png';
 
     if(!empty($_SESSION['user'][5])){
-        $profilePicture = '../../images/'.$_SESSION['user'][5];
+        $profilePicture = '../../images/profile_images/'.$_SESSION['user'][5];
     }
 ?>
 <!DOCTYPE html>
@@ -25,12 +25,18 @@
     <div>
         <div>
             <img src="<?php echo htmlspecialchars($profilePicture); ?>" alt="profilePicture" style='width:40px;'>
+            <img src="../../images/icons/edit_icon.jpg" alt="edit" style='width:40px;'>
         </div>
         <div>
             <h1><?php echo htmlspecialchars($_SESSION['user'][1].' '.$_SESSION['user'][2]); ?></h1>
             <p><?php echo htmlspecialchars($_SESSION['user'][3]); ?></p>
         </div>
         <p><?php echo htmlspecialchars(searchCourses($connection,$_SESSION['user'][6])) ?></p>
+    </div>
+    <div>
+        <div>
+            
+        </div>
     </div>
 </body>
 </html>

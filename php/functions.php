@@ -79,4 +79,16 @@
 
         return null;
     }
+
+    function getProjects($connection,$courseId){
+        $sql = 'SELECT * FROM projects WHERE course_id = '.$courseId;
+        
+        return mysqli_query($connection,$sql);
+    }
+
+    function getStudents($connection,$courseId){
+        $sql = 'SELECT * FROM students WHERE course_id = '.$courseId;
+        
+        return mysqli_query($connection,$sql);
+    }
 ?>

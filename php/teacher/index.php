@@ -2,6 +2,8 @@
     include '../connection.php';
     include '../functions.php';
 
+    $error ='';
+
     session_start();
 
     if(!$_SESSION['user'] || !searchTeacher($connection,NULL,NULL,NULL,$_SESSION['user'][3])){
@@ -16,6 +18,15 @@
 
     $projects = getProjects($connection,$_SESSION['user'][6]);
     $students = getStudents($connection,$_SESSION['user'][6]);
+
+    if(!empty($_POST['addStudentButton'])){
+        if(!empty($_POST['name']) && !empty($_POST['surnames']) && !empty($_POST['dni'])){
+            addStudent($connection,$_POST['name'],$_POST['surnames'],$_POST['dni'],$_SESSION['user'][6]);
+        }else{
+            $error = 'All fields are required';
+        }
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,8 +68,30 @@
                     echo "<div class='student'><h2>".$row['name'].' '.$row['surnames'].'</h2><div class="subProject"><img src="../../images/icons/bin_icon.svg" alt="edit" style="width:20px;"><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div></div>';
                 }
             ?>
-            <button>+</button>
+            <form method='post'>
+                <input type="submit" name='addStudentShow' value='+'>
+            </form>
             <button>Import Students</button>
+        </div>
+        <div class='action'>
+                <?php
+                if(!empty($_POST['addStudentButton']) || !empty($_POST['addStudentShow'])){
+                ?>
+                <div class='addStudent'>
+                    <h2>Create student</h2>
+                    <form method='post'>
+                        <input type="text" placeholder='Name' name='name'>
+                        <input type="text" placeholder='Surname' name='surnames'>
+                        <input type="text" placeholder='DNI' name='dni'>
+                        <input type="submit" value='add' name='addStudentButton'>
+                    </form>
+                    <?php if ($error): ?>
+                        <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+                    <?php endif; ?>
+                </div>
+                <?php
+                }
+                ?>
         </div>
     </div>
 </body>

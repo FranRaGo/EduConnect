@@ -27,6 +27,10 @@
         }
     }
 
+    if(!empty($_POST['deleteUserButton'])){
+        deleteStudent($connection,intval($_POST['deleteUserButton']));
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -64,10 +68,12 @@
         </div>
         <div class="students">
         <?php
-                while($row = mysqli_fetch_assoc($students)){
-                    echo "<div class='student'><h2>".$row['name'].' '.$row['surnames'].'</h2><div class="subProject"><img src="../../images/icons/bin_icon.svg" alt="edit" style="width:20px;"><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div></div>';
-                }
-            ?>
+                    echo "<form method='post'>";
+                    while($row = mysqli_fetch_assoc($students)){
+                        echo "<div class='student'><h2>".$row['name'].' '.$row['surnames'].'</h2><div class="subProject"><button type="submit" name="deleteUserButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div></div>';
+                    }
+                    echo "</form>";
+                ?>
             <form method='post'>
                 <input type="submit" name='addStudentShow' value='+'>
             </form>

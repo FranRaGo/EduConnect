@@ -84,6 +84,14 @@
         header('Location: index.php');
     }
 
+    function deleteStudent($connection,$id){
+        $sql = 'DELETE FROM students WHERE id = '.$id;
+
+        mysqli_query($connection,$sql);
+        
+        header('Location: index.php');
+    }
+
     // Función para buscar un registro en cualquier tabla utilizando un ID
     function searchById($table, $id){
         // Construye la consulta para buscar por ID en la tabla especificada

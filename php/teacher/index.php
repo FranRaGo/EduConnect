@@ -19,12 +19,20 @@
     $projects = getProjects($connection,$_SESSION['user'][6]);
     $students = getStudents($connection,$_SESSION['user'][6]);
 
+    if(!empty($_POST['cancelButton'])){
+        header('Location: index.php');
+    }
+
     if(!empty($_POST['addStudentButton'])){
         if(!empty($_POST['name']) && !empty($_POST['surnames']) && !empty($_POST['dni'])){
             addStudent($connection,$_POST['name'],$_POST['surnames'],$_POST['dni'],$_SESSION['user'][6]);
         }else{
             $error = 'All fields are required';
         }
+    }
+
+    if(!empty($_POST['editStudentButton'])){
+        modifyStudent($connection,$_POST['editStudentButton'],$_POST['name'],$_POST['surnames'],$_POST['gmail'],$_POST['dni']);
     }
 
     if(!empty($_POST['addProjectButton'])){
@@ -35,8 +43,8 @@
         }
     }
 
-    if(!empty($_POST['deleteUserButton'])){
-        deleteStudent($connection,intval($_POST['deleteUserButton']));
+    if(!empty($_POST['deleteStudentButton'])){
+        deleteStudent($connection,intval($_POST['deleteStudentButton']));
     }
 
     if(!empty($_POST['deleteProjectButton'])){
@@ -85,7 +93,7 @@
             <form method='post'>
             <?php
                 while($row = mysqli_fetch_assoc($students)){
-                    echo "<div class='student'><h2>".$row['name'].' '.$row['surnames'].'</h2><div class="subProject"><button type="submit" name="deleteUserButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div></div>';
+                    echo "<div class='student'><h2>".$row['name'].' '.$row['surnames'].'</h2><div class="subProject"><button type="submit" name="deleteStudentButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><button type="submit" name="editStudentShow" value='.$row['id'].'><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></button></div></div>';
                 }
             ?>
                 <input type="submit" name='addStudentShow' value='+'>
@@ -103,6 +111,7 @@
                         <input type="text" placeholder='Surname' name='surnames'>
                         <input type="text" placeholder='DNI' name='dni'>
                         <input type="submit" value='ADD' name='addStudentButton'>
+                        <button type='submit' name='cancelButton'><img src="../../images/icons/close_icon.png" alt="Cancel" style="width:20px;"></button>
                     </form>
                     <?php if ($error): ?>
                         <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
@@ -111,12 +120,34 @@
                 <?php
                 }else if(!empty($_POST['addProjectButton']) || !empty($_POST['addProjectShow'])){
                 ?>
-                    <div class='addStudent'>
+                    <div class='addProject'>
                         <h2>Create project</h2>
                         <form method='post'>
                             <input type="text" placeholder='Title' name='title'>
                             <textarea name="description" placeholder='Description'></textarea>
                             <input type="submit" value='ADD' name='addProjectButton'>
+                            <button type='submit' name='cancelButton'><img src="../../images/icons/close_icon.png" alt="Cancel" style="width:20px;"></button>
+                        </form>
+                        <?php if ($error): ?>
+                            <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+                        <?php endif; ?>
+                    </div>
+                <?php
+               }else if(!empty($_POST['editStudentButton']) || !empty($_POST['editStudentShow'])){
+                ?>
+                    <div class='editStudent'>
+                        <h2>Edit student</h2>
+                        <form method='post'>
+                            <?php
+                                $student = searchStudent($connection, $_POST['editStudentShow'], null, null, null);
+
+                                echo '<input type="text" value="'.$student[1].'" placeholder="Name" name="name">';
+                                echo '<input type="text" value="'.$student[2].'" placeholder="Surname" name="surnames">';
+                                echo '<input type="text" value="'.$student[3].'" placeholder="Gmail" name="gmail">';
+                                echo '<input type="text" value="'.$student[7].'" placeholder="DNI" name="dni">';
+                                echo '<button type="submit" value="'.$_POST['editStudentShow'].'"  name="editStudentButton">SAVE</button>';
+                            ?>                            
+                            <button type='submit' name='cancelButton'><img src="../../images/icons/close_icon.png" alt="Cancel" style="width:20px;"></button>
                         </form>
                         <?php if ($error): ?>
                             <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>

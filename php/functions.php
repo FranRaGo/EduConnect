@@ -4,7 +4,7 @@
         // Consulta para seleccionar todos los registros de "teachers"
         $sql = 'SELECT * FROM teachers';
 
-        // Ejecuta la consulta y devuelve el resultado
+        // Ejecuta la consulta y devuelve el resultado como un recurso de MySQL
         return mysqli_query($connection, $sql);
     }
 
@@ -14,7 +14,7 @@
         $sql = 'SELECT * FROM teachers';
         $query = mysqli_query($connection, $sql);
 
-        // Itera por cada fila obtenida de la consulta
+        // Itera por cada fila obtenida del resultado
         while($row = mysqli_fetch_assoc($query)){
             // Comprueba si alguno de los criterios coincide con el registro actual
             if(($id && $id === $row['id']) || 
@@ -22,7 +22,7 @@
                ($surnames && $surnames === $row['surnames']) || 
                ($gmail && $gmail === $row['gmail'])){
                 // Si hay coincidencia, retorna un array con los datos relevantes del profesor
-                return [$row['id'], $row['name'], $row['surnames'], $row['gmail'], $row['password'],$row['profile_picture'],$row['course_id']];
+                return [$row['id'], $row['name'], $row['surnames'], $row['gmail'], $row['password'], $row['profile_picture'], $row['course_id']];
             }
         }
         // Si no encuentra coincidencias, no retorna nada
@@ -33,62 +33,89 @@
         // Consulta para seleccionar todos los registros de "students"
         $sql = 'SELECT * FROM students';
 
-        // Ejecuta la consulta y devuelve el resultado
+        // Ejecuta la consulta y devuelve el resultado como un recurso de MySQL
         return mysqli_query($connection, $sql);
     }
-    
+
     // Función para buscar un estudiante en la tabla "students" según ciertos criterios
     function searchStudent($connection, $id, $name, $surnames, $gmail){
         // Consulta para seleccionar todos los registros de "students"
         $sql = 'SELECT * FROM students';
         $query = mysqli_query($connection, $sql);
-        
-        // Itera por cada fila obtenida de la consulta
+
+        // Itera por cada fila obtenida del resultado
         while($row = mysqli_fetch_assoc($query)){
             // Comprueba si alguno de los criterios coincide con el registro actual
             if(($id && $id === $row['id']) || 
-            ($name && $name === $row['name']) || 
-            ($surnames && $surnames === $row['surnames']) || 
-            ($gmail && $gmail === $row['gmail'])){
+               ($name && $name === $row['name']) || 
+               ($surnames && $surnames === $row['surnames']) || 
+               ($gmail && $gmail === $row['gmail'])){
                 // Si hay coincidencia, retorna un array con los datos relevantes del estudiante
-                return [$row['id'], $row['name'], $row['surnames'], $row['gmail'], $row['password'],$row['profile_picture'],$row['course_id']];
+                return [$row['id'], $row['name'], $row['surnames'], $row['gmail'], $row['password'], $row['profile_picture'], $row['course_id'], $row['DNI']];
             }
         }
         
         // Si no encuentra coincidencias, retorna null
         return null;
     }
-    
-    function getStudents($connection,$courseId){
+
+    // Función para obtener los estudiantes de un curso específico
+    function getStudents($connection, $courseId){
+        // Consulta para seleccionar estudiantes según el ID del curso
         $sql = 'SELECT * FROM students WHERE course_id = '.$courseId;
-        
-        return mysqli_query($connection,$sql);
+
+        // Ejecuta la consulta y devuelve el resultado
+        return mysqli_query($connection, $sql);
     }
 
-    function addStudent($connection,$name,$surnames,$dni,$courseId){
-        $gmail = mb_strtolower($name, "UTF-8").mb_strtolower($surnames, "UTF-8").'@gmail.com';
+    // Función para añadir un nuevo estudiante a la tabla "students"
+    function addStudent($connection, $name, $surnames, $dni, $courseId){
+        // Genera un email basado en el nombre y apellidos
+        $gmail = mb_strtolower($name, "UTF-8") . mb_strtolower($surnames, "UTF-8") . '@gmail.com';
 
+        // Divide el nombre y apellidos en caracteres individuales
         $nameDelimited = implode("|", str_split($name));
         $arrName = explode("|", $nameDelimited);
         $surnameDelimited = implode("|", str_split($surnames));
         $arrSurname = explode("|", $surnameDelimited);
 
-        $course = searchCourses($connection,$courseId);
+        // Busca el curso correspondiente al ID proporcionado
+        $course = searchCourses($connection, $courseId);
 
-        $password = $arrName[0].$arrSurname[0].$course;
+        // Genera una contraseña utilizando la primera letra del nombre, apellido y título del curso
+        $password = $arrName[0] . $arrSurname[0] . $course;
 
-        $sql = "INSERT INTO students(name,surnames,dni,gmail,password,course_id) VALUES('$name','$surnames','$dni','$gmail','$password','$courseId')";
+        // Consulta para insertar un nuevo estudiante
+        $sql = "INSERT INTO students(name, surnames, dni, gmail, password, course_id) VALUES('$name', '$surnames', '$dni', '$gmail', '$password', '$courseId')";
 
-        mysqli_query($connection,$sql);
+        // Ejecuta la consulta
+        mysqli_query($connection, $sql);
 
+        // Redirige a la página principal
         header('Location: index.php');
     }
 
-    function deleteStudent($connection,$id){
+    // Función para modificar los datos de un estudiante existente
+    function modifyStudent($connection, $id, $name, $surnames, $gmail, $dni){
+        // Consulta para actualizar los datos del estudiante
+        $sql = "UPDATE students SET name = '$name', surnames = '$surnames', gmail = '$gmail', DNI = '$dni' WHERE id = $id";
+
+        // Ejecuta la consulta
+        mysqli_query($connection, $sql);
+
+        // Redirige a la página principal
+        header('Location: index.php');
+    }
+
+    // Función para eliminar un estudiante de la tabla "students"
+    function deleteStudent($connection, $id){
+        // Consulta para eliminar un estudiante según su ID
         $sql = 'DELETE FROM students WHERE id = '.$id;
 
-        mysqli_query($connection,$sql);
-        
+        // Ejecuta la consulta
+        mysqli_query($connection, $sql);
+
+        // Redirige a la página principal
         header('Location: index.php');
     }
 
@@ -101,39 +128,52 @@
         return mysqli_query($connection, $sql);
     }
 
-    function searchCourses($connection,$id){
+    // Función para buscar el título de un curso basado en su ID
+    function searchCourses($connection, $id){
+        // Consulta para obtener el título del curso según su ID
         $sql = 'SELECT title FROM courses WHERE id = '.$id;
-        $query = mysqli_query($connection,$sql);
+        $query = mysqli_query($connection, $sql);
 
+        // Verifica si hay resultados y devuelve el título del curso
         if($query && mysqli_num_rows($query) > 0){
             $row = mysqli_fetch_assoc($query);
             return $row['title'];
         }
 
+        // Si no hay resultados, retorna null
         return null;
     }
 
-    function getProjects($connection,$courseId){
+    // Función para obtener los proyectos de un curso específico
+    function getProjects($connection, $courseId){
+        // Consulta para seleccionar proyectos según el ID del curso
         $sql = 'SELECT * FROM projects WHERE course_id = '.$courseId;
-        
-        return mysqli_query($connection,$sql);
+
+        // Ejecuta la consulta y devuelve el resultado
+        return mysqli_query($connection, $sql);
     }
 
-    function addProject($connection,$title,$description,$courseId){
-        $sql = "INSERT INTO projects(title,description,finalized,course_id) VALUES('$title','$description',0,'$courseId')";
+    // Función para añadir un nuevo proyecto a la tabla "projects"
+    function addProject($connection, $title, $description, $courseId){
+        // Consulta para insertar un nuevo proyecto
+        $sql = "INSERT INTO projects(title, description, finalized, course_id) VALUES('$title', '$description', 0, '$courseId')";
 
-        mysqli_query($connection,$sql);
+        // Ejecuta la consulta
+        mysqli_query($connection, $sql);
 
+        // Redirige a la página principal
         header('Location: index.php');
     }
 
-    function deleteProject($connection,$id){
+    // Función para eliminar un proyecto de la tabla "projects"
+    function deleteProject($connection, $id){
+        // Consulta para eliminar un proyecto según su ID
         $sql = 'DELETE FROM projects WHERE id = '.$id;
 
-        mysqli_query($connection,$sql);
-        
+        // Ejecuta la consulta
+        mysqli_query($connection, $sql);
+
+        // Redirige a la página principal
         header('Location: index.php');
     }
-
-
 ?>

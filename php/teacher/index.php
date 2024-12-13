@@ -27,8 +27,21 @@
         }
     }
 
+    if(!empty($_POST['addProjectButton'])){
+        if(!empty($_POST['title']) && !empty($_POST['description'])){
+            addProject($connection,$_POST['title'],$_POST['description'],$_SESSION['user'][6]);
+        }else{
+            $error = 'All fields are required';
+        }
+    }
+
     if(!empty($_POST['deleteUserButton'])){
         deleteStudent($connection,intval($_POST['deleteUserButton']));
+    }
+
+    if(!empty($_POST['deleteProjectButton'])){
+        deleteProject($connection,intval($_POST['deleteProjectButton']));
+        echo 'hola';
     }
 
 ?>
@@ -53,28 +66,28 @@
     </div>
     <div>
         <div class="projects">
+            <form method='post'>
             <?php
                 while($row = mysqli_fetch_assoc($projects)){
                     echo "<div class='project'><h2>".$row['title']."</h2>";
                     if($row['finalized']){
-                        echo '<div class="subProject"><p>Finalized</p><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div>';
+                        echo '<div class="subProject"><p>Finalized</p><button type="submit" name="deleteProjectButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div>';
                     } else {
-                        echo '<div class="subProject"><p>In Progress</p><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div>';
+                        echo '<div class="subProject"><p>In Progress</p><button type="submit" name="deleteProjectButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div>';
                     }
                     echo "</div>";
                 }
             ?>
-            <button>+</button>
+                <input type="submit" name='addProjectShow' value='+'>
+            </form>
         </div>
         <div class="students">
-        <?php
-                    echo "<form method='post'>";
-                    while($row = mysqli_fetch_assoc($students)){
-                        echo "<div class='student'><h2>".$row['name'].' '.$row['surnames'].'</h2><div class="subProject"><button type="submit" name="deleteUserButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div></div>';
-                    }
-                    echo "</form>";
-                ?>
             <form method='post'>
+            <?php
+                while($row = mysqli_fetch_assoc($students)){
+                    echo "<div class='student'><h2>".$row['name'].' '.$row['surnames'].'</h2><div class="subProject"><button type="submit" name="deleteUserButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div></div>';
+                }
+            ?>
                 <input type="submit" name='addStudentShow' value='+'>
             </form>
             <button>Import Students</button>
@@ -89,12 +102,26 @@
                         <input type="text" placeholder='Name' name='name'>
                         <input type="text" placeholder='Surname' name='surnames'>
                         <input type="text" placeholder='DNI' name='dni'>
-                        <input type="submit" value='add' name='addStudentButton'>
+                        <input type="submit" value='ADD' name='addStudentButton'>
                     </form>
                     <?php if ($error): ?>
                         <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                     <?php endif; ?>
                 </div>
+                <?php
+                }else if(!empty($_POST['addProjectButton']) || !empty($_POST['addProjectShow'])){
+                ?>
+                    <div class='addStudent'>
+                        <h2>Create project</h2>
+                        <form method='post'>
+                            <input type="text" placeholder='Title' name='title'>
+                            <textarea name="description" placeholder='Description'></textarea>
+                            <input type="submit" value='ADD' name='addProjectButton'>
+                        </form>
+                        <?php if ($error): ?>
+                            <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+                        <?php endif; ?>
+                    </div>
                 <?php
                 }
                 ?>

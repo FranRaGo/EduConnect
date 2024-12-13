@@ -119,5 +119,21 @@
         return mysqli_query($connection,$sql);
     }
 
+    function addProject($connection,$title,$description,$courseId){
+        $sql = "INSERT INTO projects(title,description,finalized,course_id) VALUES('$title','$description',0,'$courseId')";
+
+        mysqli_query($connection,$sql);
+
+        header('Location: index.php');
+    }
+
+    function deleteProject($connection,$id){
+        $sql = 'DELETE FROM projects WHERE id = '.$id;
+
+        mysqli_query($connection,$sql);
+        
+        header('Location: index.php');
+    }
+
 
 ?>

@@ -176,4 +176,19 @@
         // Redirige a la página principal
         header('Location: index.php');
     }
+
+    function changeProfilePhoto($connection,$id,$gmail,$profilePhoto,$table,$rutaSave){
+
+        $fileExtension = pathinfo($profilePhoto['name'], PATHINFO_EXTENSION);
+        $nameFile = $gmail.'.'.$fileExtension;
+
+        move_uploaded_file($profilePhoto['tmp_name'],$rutaSave.$nameFile);
+
+        $sql = "UPDATE $table SET profile_picture = '$nameFile' WHERE id = $id";
+        $_SESSION['user'][5] = $nameFile;
+    
+        mysqli_query($connection,$sql);
+
+        header('Location: index.php');
+    }
 ?>

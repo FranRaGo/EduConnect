@@ -49,7 +49,14 @@
 
     if(!empty($_POST['deleteProjectButton'])){
         deleteProject($connection,intval($_POST['deleteProjectButton']));
-        echo 'hola';
+    }
+
+    if(!empty($_POST['changeProfilePhotoButton'])){
+        if($_FILES['profilePhoto']['name'] != ''){
+            changeProfilePhoto($connection,$_SESSION['user'][0],$_SESSION['user'][3],$_FILES['profilePhoto'],'teachers','../../images/profile_images/');
+        }else{
+            $error = 'File is required';
+        }
     }
 
 ?>
@@ -64,7 +71,11 @@
     <div>
         <div>
             <img src="<?php echo htmlspecialchars($profilePicture); ?>" alt="profilePicture" style='width:40px;'>
-            <img src="../../images/icons/edit_icon.svg" alt="edit" style='width:20px;'>
+            <form method="post">
+                <button type="submit" name="changeProfilePhotoShow" value="1">
+                    <img src="../../images/icons/edit_icon.svg" alt="Change" style='width:20px;'>
+                </button>
+            </form>
         </div>
         <div>
             <h1><?php echo htmlspecialchars($_SESSION['user'][1].' '.$_SESSION['user'][2]); ?></h1>
@@ -133,7 +144,7 @@
                         <?php endif; ?>
                     </div>
                 <?php
-               }else if(!empty($_POST['editStudentButton']) || !empty($_POST['editStudentShow'])){
+                }else if(!empty($_POST['editStudentButton']) || !empty($_POST['editStudentShow'])){
                 ?>
                     <div class='editStudent'>
                         <h2>Edit student</h2>
@@ -153,6 +164,19 @@
                             <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                         <?php endif; ?>
                     </div>
+                <?php
+                }else if(!empty($_POST['changeProfilePhotoShow']) || !empty($_POST['changeProfilePhotoButton'])){
+                ?>
+                    <div class='changeProfilePhoto'>
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="file" name="profilePhoto" accept="image/*">
+                            <button type="submit" name="changeProfilePhotoButton" value='SAVE'>SAVE</button>
+                            <button type='submit' name='cancelButton'><img src="../../images/icons/close_icon.png" alt="Cancel" style="width:20px;"></button>
+                        </form>
+                    </div>
+                    <?php if ($error): ?>
+                            <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+                    <?php endif; ?>
                 <?php
                 }
                 ?>

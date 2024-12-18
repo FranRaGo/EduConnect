@@ -43,6 +43,10 @@
         }
     }
 
+    if(!empty($_POST['editProjectButton'])){
+        header('Location: editProject.php?id='.$_POST['editProjectButton']);
+    }
+
     if(!empty($_POST['deleteStudentButton'])){
         deleteStudent($connection,intval($_POST['deleteStudentButton']));
     }
@@ -85,14 +89,31 @@
     </div>
     <div>
         <div class="projects">
+            <h2>Projects</h2>
             <form method='post'>
             <?php
                 while($row = mysqli_fetch_assoc($projects)){
-                    echo "<div class='project'><h2>".$row['title']."</h2>";
+                    echo "<div class='project'><h3>".$row['title']."</h3>";
                     if($row['finalized']){
-                        echo '<div class="subProject"><p>Finalized</p><button type="submit" name="deleteProjectButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div>';
+                        echo '<div class="subProject">
+                                <p>Finalized</p>
+                                <button type="submit" name="deleteProjectButton" value='.$row['id'].'>
+                                    <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
+                                </button>
+                                <button type="submit" name="editProjectButton" value='.$row['id'].'>
+                                    <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;">
+                                </button>
+                                </div>';
                     } else {
-                        echo '<div class="subProject"><p>In Progress</p><button type="submit" name="deleteProjectButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></div>';
+                        echo '<div class="subProject">
+                                <p>In Progress</p>
+                                <button type="submit" name="deleteProjectButton" value='.$row['id'].'>
+                                    <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
+                                </button>
+                                <button type="submit" name="editProjectButton" value='.$row['id'].'>
+                                    <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;">
+                                </button>
+                                </div>';
                     }
                     echo "</div>";
                 }
@@ -101,10 +122,20 @@
             </form>
         </div>
         <div class="students">
+            <h2>Students</h2>
             <form method='post'>
             <?php
                 while($row = mysqli_fetch_assoc($students)){
-                    echo "<div class='student'><h2>".$row['name'].' '.$row['surnames'].'</h2><div class="subProject"><button type="submit" name="deleteStudentButton" value='.$row['id'].'><img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;"></button><button type="submit" name="editStudentShow" value='.$row['id'].'><img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></button></div></div>';
+                    echo "<div class='student'>
+                            <h3>".$row['name'].' '.$row['surnames'].'</h3>
+                            <div class="subProject">
+                                <button type="submit" name="deleteStudentButton" value='.$row['id'].'>
+                                    <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
+                                </button>
+                                <button type="submit" name="editStudentShow" value='.$row['id'].'>
+                                    <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></button>
+                                </div>
+                            </div>';
                 }
             ?>
                 <input type="submit" name='addStudentShow' value='+'>

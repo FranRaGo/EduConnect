@@ -153,6 +153,21 @@
         return mysqli_query($connection, $sql);
     }
 
+    function getProject($connection,$id){
+
+        $sql = 'SELECT * FROM projects WHERE id ='.$id;
+
+        $query = mysqli_query($connection,$sql);
+
+        while($row = mysqli_fetch_assoc($query)){
+            if($row['id'] === $id){
+                return[$row['id'],$row['title'],$row['description'],$row['finalized']];
+            }
+        }
+
+        return null;
+    }
+
     // Función para añadir un nuevo proyecto a la tabla "projects"
     function addProject($connection, $title, $description, $courseId){
         // Consulta para insertar un nuevo proyecto
@@ -165,6 +180,16 @@
         header('Location: index.php');
     }
 
+    function editProject($connection,$id,$title,$description,$finalized){
+
+        $sql = "UPDATE projects SET title = '$title', description = '$description', finalized = $finalized WHERE id = $id";
+
+        mysqli_query($connection,$sql);
+
+        header('Location: editProject.php?id='.$id);
+
+    }
+
     // Función para eliminar un proyecto de la tabla "projects"
     function deleteProject($connection, $id){
         // Consulta para eliminar un proyecto según su ID
@@ -172,7 +197,7 @@
 
         // Ejecuta la consulta
         mysqli_query($connection, $sql);
-
+    
         // Redirige a la página principal
         header('Location: index.php');
     }

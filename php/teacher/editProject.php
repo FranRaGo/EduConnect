@@ -18,6 +18,66 @@
             editProject($connection,$project[0],$_POST['title'],$_POST['description'],$_POST['finalized']);
         }
 
+        if(!empty($_POST['addActivityButton'])){
+
+            if(!empty($_POST['title']) && !empty($_POST['description'])){
+
+                $arrItems = [];
+                $totalValue = 0;
+                if(empty($_POST['item1']) && empty($_POST['value1']) && $_FILES['icon1']['error'] === UPLOAD_ERR_NO_FILE){
+                    $error = 'First item is requiered';
+                }else if(empty($_POST['item1']) || empty($_POST['value1']) || $_FILES['icon1']['error'] === UPLOAD_ERR_NO_FILE){
+                    $error = 'All fields of an item are required';
+                }else{
+
+                    $error ='';
+                    $totalValue += intval($_POST['value1']);
+                    array_push($arrItems,[$_POST['item1'],intval($_POST['value1']),$_FILES['icon1']]);
+
+                    if(!empty($_POST['item2']) || !empty($_POST['value2']) || $_FILES['icon2']['error'] != UPLOAD_ERR_NO_FILE){
+                        if(!empty($_POST['item2']) && !empty($_POST['value2']) && $_FILES['icon2']['error'] != UPLOAD_ERR_NO_FILE){
+                            $totalValue += intval($_POST['value2']);
+                            array_push($arrItems,[$_POST['item2'],intval($_POST['value2']),$_FILES['icon2']]);     
+                        }else{
+                            $error = 'All fields of an item are required';
+                        }
+                    }
+
+                    if(!empty($_POST['item3']) || !empty($_POST['value3']) || $_FILES['icon3']['error'] != UPLOAD_ERR_NO_FILE){
+                        if(!empty($_POST['item3']) && !empty($_POST['value3']) && $_FILES['icon3']['error'] != UPLOAD_ERR_NO_FILE){
+                            $totalValue += intval($_POST['value3']);
+                            array_push($arrItems,[$_POST['item3'],intval($_POST['value3']),$_FILES['icon3']]);     
+                        }else{
+                            $error = 'All fields of an item are required';
+                        }
+                    }
+
+                    if(!empty($_POST['item4']) || !empty($_POST['value4']) || $_FILES['icon4']['error'] != UPLOAD_ERR_NO_FILE){
+                        if(!empty($_POST['item4']) && !empty($_POST['value4']) && $_FILES['icon4']['error'] != UPLOAD_ERR_NO_FILE){
+                            $totalValue += intval($_POST['value4']);
+                            array_push($arrItems,[$_POST['item4'],intval($_POST['value4']),$_FILES['icon4']]);     
+                        }else{
+                            $error = 'All fields of an item are required';
+                        }
+                    }
+
+                    if($totalValue > 100){
+                        $error = 'The total value is more than 100';
+                    }else if($totalValue < 100){
+                        $error = 'the total value is less than 100';
+                    }
+
+                    if(!$error){
+                        addActivity($connection,$project[0],$_POST['title'],$_POST['description'],$arrItems);
+                    }
+                }
+
+            }else{
+                $error = 'Title and description are required';
+            }
+
+        }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,15 +88,22 @@
 </head>
 <body>
     <div class='container'>
-        <div class='project'>
+        <div class='projectContainer'>
             <div>
                 <h1><?php echo htmlspecialchars($project[1]) ?></h1>
                 <p><?php echo ($project[3]) ? 'Finalizado' : 'En progreso'; ?></p>
             </div>
             <p><?php echo htmlspecialchars($project[2]) ?></p>
         </div>
-        <div class='activities'>
+        <div class='activitiesContainer'>
+            <div class='activities'>
 
+            </div>
+            <form method="post">
+                <button type='submit' name='addActivity' value='Add'>
+                    <img src="../../images/icons/more_icon.png" alt="Add" style="width:20px;">
+                </button>
+            </form>
         </div>
         <div class='action'>
             <form method="post">
@@ -67,6 +134,44 @@
                 <?php } ?>
                 <input type="submit" name="editApplyProjectButton" value='Apply'>
                 <input type="submit" name="cancelButton" value='Cancel'>
+            </form>
+        </div>
+    <?php } else if(!empty($_POST['addActivity']) || (!empty($_POST['addActivityButton']) && $error)){ ?>
+        <div class='addContainer'>
+            <form method="post" enctype="multipart/form-data">               
+                <input type="text" name='title' placeholder='Title'>
+                <textarea name="description" placeholder='Description'></textarea>
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td>Value</td>
+                        <td>Icon</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name='item1'></td>
+                        <td><input type="number" name='value1' placeholder='%'></td>
+                        <td><input type="file" name='icon1' accept="image/*"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name='item2'></td>
+                        <td><input type="number" name='value2' placeholder='%'></td>
+                        <td><input type="file" name='icon2' accept="image/*"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name='item3'></td>
+                        <td><input type="number" name='value3' placeholder='%'></td>
+                        <td><input type="file" name='icon3' accept="image/*"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name='item4'></td>
+                        <td><input type="number" name='value4' placeholder='%'></td>
+                        <td><input type="file" name='icon4' accept="image/*"></td>
+                    </tr>
+                    <input type="submit" name='addActivityButton' value='Add'>
+                </table>
+                <?php if ($error): ?>
+                        <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+                <?php endif; ?>
             </form>
         </div>
     <?php } ?>

@@ -202,6 +202,36 @@
         header('Location: index.php');
     }
 
+    function addActivity($connection,$projectId,$title,$description,$arrItems){
+        $sql = "INSERT INTO activities(title,description,finalized,project_id) VALUES('$title','$description',0,$projectId)";
+
+        mysqli_query($connection,$sql);
+
+        $sql = "SELECT id FROM activities WHERE description = '$description' AND title = '$title'";
+        $query = mysqli_query($connection, $sql);
+
+        // Verifica si hay resultados y devuelve el título del curso
+        if($query && mysqli_num_rows($query) > 0){
+            $row = mysqli_fetch_assoc($query);
+            $idActivity = $row['id'];
+        }
+
+        foreach($arrItems as $value){
+            addItem($connection,$idActivity,$value[0],$value[1],$value[2]);
+        }
+    }
+
+    function addItem($connection,$activityId,$title,$value,$icon){
+        $fileExtension = pathinfo($icon['name'], PATHINFO_EXTENSION);
+        $nameFile = $activityId.$title.'.'.$fileExtension;
+
+        move_uploaded_file($icon['tmp_name'],'../../images/items_icons/'.$nameFile);
+
+        $sql = "INSERT INTO items(activity_id,title,value,icon) VALUES($activityId,'$title',$value,'$nameFile')";
+
+        mysqli_query($connection,$sql);
+    }
+
     function changeProfilePhoto($connection,$id,$gmail,$profilePhoto,$table,$rutaSave){
 
         $fileExtension = pathinfo($profilePhoto['name'], PATHINFO_EXTENSION);

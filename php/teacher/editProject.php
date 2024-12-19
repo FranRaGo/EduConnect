@@ -90,14 +90,60 @@
     <div class='container'>
         <div class='projectContainer'>
             <div>
-                <h1><?php echo htmlspecialchars($project[1]) ?></h1>
+                <h1><?php echo htmlspecialchars($project[1])?></h1>
                 <p><?php echo ($project[3]) ? 'Finalizado' : 'En progreso'; ?></p>
             </div>
             <p><?php echo htmlspecialchars($project[2]) ?></p>
         </div>
         <div class='activitiesContainer'>
             <div class='activities'>
+            <?php
+                $activities = getActivities($connection,$project[0]);
 
+                if($activities != null){
+                    while($row = mysqli_fetch_assoc($activities)){
+                        ?>
+                        <div class='activity'>
+                            <div class='activityLeft'>
+                                <h2><?php echo htmlspecialchars($row['title'])?></h2>
+                                <img src="../../images/icons/edit_icon.svg" alt="Edit Activity" style="width:20px;">
+                            </div>
+                            <div class='activityCenter'>
+                                <div class='items'>
+                                <?php
+                                    $items = getItems($connection,$row['id']);
+
+                                    if($items != null){
+                                        while($rowItem = mysqli_fetch_assoc($items)){
+                                            ?>
+                                                <div class='item'>
+                                                    <p><?php echo htmlspecialchars($rowItem['title']."(".$rowItem['value'].")")?></p>
+                                                    <img src="<?php echo htmlspecialchars('../../images/items_icons/'.$rowItem['icon'])?>" alt="Item Icon" style="width:20px;">
+                                                </div>
+                                            <?php
+                                        }
+                                    }else{
+                                        ?>
+                                        <p>There are no items</p>
+                                        <?php
+                                    }
+                                ?>
+                                </div>
+                                <p><?php echo htmlspecialchars($row['description'])?></p>
+                            </div>
+                            <div class='ActivityRight'>
+                                <img src="../../images/icons/bin_icon.svg" alt="Delete Activity" style="width:20px;">
+                                <img src="../../images/icons/score_icon.png" alt="Score Activity" style="width:20px;">
+                            </div>
+                        </div>
+                        <?php
+                    }
+                }else{
+                    ?>
+                    <p>There are no activities</p>
+                    <?php
+                }
+            ?>
             </div>
             <form method="post">
                 <button type='submit' name='addActivity' value='Add'>
@@ -168,6 +214,7 @@
                         <td><input type="file" name='icon4' accept="image/*"></td>
                     </tr>
                     <input type="submit" name='addActivityButton' value='Add'>
+                    <input type="submit" name="cancelButton" value='Cancel'>
                 </table>
                 <?php if ($error): ?>
                         <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>

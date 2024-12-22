@@ -64,8 +64,13 @@
         // Consulta para seleccionar estudiantes según el ID del curso
         $sql = 'SELECT * FROM students WHERE course_id = '.$courseId;
 
-        // Ejecuta la consulta y devuelve el resultado
-        return mysqli_query($connection, $sql);
+        $query = mysqli_query($connection, $sql);
+
+        if ($query && mysqli_num_rows($query) > 0) {
+            return $query;
+        } else {
+            return null;
+        }
     }
 
     // Función para añadir un nuevo estudiante a la tabla "students"
@@ -150,7 +155,13 @@
         $sql = 'SELECT * FROM projects WHERE course_id = '.$courseId;
 
         // Ejecuta la consulta y devuelve el resultado
-        return mysqli_query($connection, $sql);
+        $query = mysqli_query($connection, $sql);
+
+        if ($query && mysqli_num_rows($query) > 0) {
+            return $query;
+        } else {
+            return null;
+        }
     }
 
     function getProject($connection,$id){

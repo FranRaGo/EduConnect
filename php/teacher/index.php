@@ -16,9 +16,6 @@
         $profilePicture = '../../images/profile_images/'.$_SESSION['user'][5];
     }
 
-    $projects = getProjects($connection,$_SESSION['user'][6]);
-    $students = getStudents($connection,$_SESSION['user'][6]);
-
     if(!empty($_POST['cancelButton'])){
         header('Location: index.php');
     }
@@ -92,31 +89,38 @@
             <h2>Projects</h2>
             <form method='post'>
             <?php
-                while($row = mysqli_fetch_assoc($projects)){
-                    echo "<div class='project'><h3>".$row['title']."</h3>";
-                    if($row['finalized']){
-                        echo '<div class="subProject">
-                                <p>Finalized</p>
-                                <button type="submit" name="deleteProjectButton" value='.$row['id'].'>
-                                    <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
-                                </button>
-                                <button type="submit" name="editProjectButton" value='.$row['id'].'>
-                                    <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;">
-                                </button>
-                                </div>';
-                    } else {
-                        echo '<div class="subProject">
-                                <p>In Progress</p>
-                                <button type="submit" name="deleteProjectButton" value='.$row['id'].'>
-                                    <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
-                                </button>
-                                <button type="submit" name="editProjectButton" value='.$row['id'].'>
-                                    <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;">
-                                </button>
-                                </div>';
+                $projects = getProjects($connection,$_SESSION['user'][6]);
+
+                if($projects != null){
+                    while($row = mysqli_fetch_assoc($projects)){
+                        echo "<div class='project'><h3>".$row['title']."</h3>";
+                        if($row['finalized']){
+                            echo '<div class="subProject">
+                                    <p>Finalized</p>
+                                    <button type="submit" name="deleteProjectButton" value='.$row['id'].'>
+                                        <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
+                                    </button>
+                                    <button type="submit" name="editProjectButton" value='.$row['id'].'>
+                                        <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;">
+                                    </button>
+                                    </div>';
+                        } else {
+                            echo '<div class="subProject">
+                                    <p>In Progress</p>
+                                    <button type="submit" name="deleteProjectButton" value='.$row['id'].'>
+                                        <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
+                                    </button>
+                                    <button type="submit" name="editProjectButton" value='.$row['id'].'>
+                                        <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;">
+                                    </button>
+                                    </div>';
+                        }
+                        echo "</div>";
                     }
-                    echo "</div>";
+                }else{
+                    ?><p>There are no projects</p><?php
                 }
+
             ?>
                 <input type="submit" name='addProjectShow' value='+'>
             </form>
@@ -125,17 +129,23 @@
             <h2>Students</h2>
             <form method='post'>
             <?php
-                while($row = mysqli_fetch_assoc($students)){
-                    echo "<div class='student'>
-                            <h3>".$row['name'].' '.$row['surnames'].'</h3>
-                            <div class="subProject">
-                                <button type="submit" name="deleteStudentButton" value='.$row['id'].'>
-                                    <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
-                                </button>
-                                <button type="submit" name="editStudentShow" value='.$row['id'].'>
-                                    <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></button>
-                                </div>
-                            </div>';
+                $students = getStudents($connection,$_SESSION['user'][6]);
+
+                if($students != null){
+                    while($row = mysqli_fetch_assoc($students)){
+                        echo "<div class='student'>
+                                <h3>".$row['name'].' '.$row['surnames'].'</h3>
+                                <div class="subProject">
+                                    <button type="submit" name="deleteStudentButton" value='.$row['id'].'>
+                                        <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
+                                    </button>
+                                    <button type="submit" name="editStudentShow" value='.$row['id'].'>
+                                        <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></button>
+                                    </div>
+                                </div>';
+                    }               
+                }else{
+                    ?><p>There are no students</p><?php
                 }
             ?>
                 <input type="submit" name='addStudentShow' value='+'>

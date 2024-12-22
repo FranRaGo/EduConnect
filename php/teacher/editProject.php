@@ -123,9 +123,7 @@
                                             <?php
                                         }
                                     }else{
-                                        ?>
-                                        <p>There are no items</p>
-                                        <?php
+                                        ?><p>There are no items</p><?php
                                     }
                                 ?>
                                 </div>
@@ -139,9 +137,7 @@
                         <?php
                     }
                 }else{
-                    ?>
-                    <p>There are no activities</p>
-                    <?php
+                    ?><p>There are no activities</p><?php
                 }
             ?>
             </div>

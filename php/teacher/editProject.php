@@ -18,6 +18,10 @@
             editProject($connection,$project[0],$_POST['title'],$_POST['description'],$_POST['finalized']);
         }
 
+        if(!empty($_POST['deleteActivityButton'])){
+            deleteActivity($connection,$_POST['deleteActivityButton']);
+        }
+
         if(!empty($_POST['addActivityButton']) || !empty($_POST['modifyActivityButton'])){
 
             if(!empty($_POST['title']) && !empty($_POST['description'])){
@@ -75,10 +79,6 @@
                         modifyItems($connection,$_POST['modifyActivityButton'],$arrItems);
                         modifyActivity($connection,$_POST['modifyActivityButton'],$_POST['title'],$_POST['description'],$_POST['finalized']);
                     }
-                    /*
-                    if(!$error){
-                    }
-                        */
                 }
 
             }else{
@@ -143,7 +143,11 @@
                                 <p><?php echo htmlspecialchars($row['description'])?></p>
                             </div>
                             <div class='ActivityRight'>
-                                <img src="../../images/icons/bin_icon.svg" alt="Delete Activity" style="width:20px;">
+                                <form method="post">
+                                    <button type='submit' name='deleteActivityButton' value='<?php echo htmlspecialchars($row['id']) ?>'>
+                                        <img src="../../images/icons/bin_icon.svg" alt="Delete Activity" style="width:20px;">
+                                    </button>
+                                </form>
                                 <img src="../../images/icons/score_icon.png" alt="Score Activity" style="width:20px;">
                             </div>
                         </div>

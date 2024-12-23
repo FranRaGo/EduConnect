@@ -264,6 +264,12 @@
         }
     }
 
+    function deleteActivity($connection,$activityId){
+        $sql = 'DELETE FROM activities WHERE id = '.$activityId;
+
+        mysqli_query($connection,$sql);
+    }
+
     function getItems($connection,$activityId){
         $sql = 'SELECT * FROM items WHERE activity_id = '.$activityId;
         $query = mysqli_query($connection,$sql);

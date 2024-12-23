@@ -225,6 +225,26 @@
         }
     }
 
+    function getActivity($connection,$activityId){
+        $sql = 'SELECT * FROM activities WHERE id = '.$activityId;
+        $query = mysqli_query($connection,$sql);
+
+        while($row = mysqli_fetch_assoc($query)){
+                return[$row['id'],$row['title'],$row['description'],$row['finalized']];
+        }
+    }
+
+    function modifyActivity($connection,$activityId,$title,$description,$finalized){
+        $sql = "UPDATE activities SET title = '$title', description = '$description', finalized = $finalized WHERE id = $activityId";
+
+        // Ejecuta la consulta
+        mysqli_query($connection, $sql);
+
+        // Redirige a la página principal
+        header('Location: editProject.php?id='.$_GET['id']);
+
+    }
+
     function addActivity($connection,$projectId,$title,$description,$arrItems){
         $sql = "INSERT INTO activities(title,description,finalized,project_id) VALUES('$title','$description',0,$projectId)";
 
@@ -254,6 +274,17 @@
         } else {
             return null;
         }    
+    }
+
+    function modifyItems($connection,$activityId,$arrItems){
+
+        $sql = 'DELETE FROM items WHERE activity_id = '.$activityId;
+
+        mysqli_query($connection,$sql);
+
+        foreach($arrItems as $value){
+            addItem($connection,$activityId,$value[0],$value[1],$value[2]);
+        }
     }
 
     function addItem($connection,$activityId,$title,$value,$icon){

@@ -157,7 +157,7 @@
                 if(!empty($_POST['addStudentButton']) || !empty($_POST['addStudentShow'])){
                 ?>
                 <div class='addStudent'>
-                    <h2>Create student</h2>
+                    <h2>Create Student</h2>
                     <form method='post'>
                         <input type="text" placeholder='Name' name='name'>
                         <input type="text" placeholder='Surname' name='surnames'>
@@ -173,7 +173,7 @@
                 }else if(!empty($_POST['addProjectButton']) || !empty($_POST['addProjectShow'])){
                 ?>
                     <div class='addProject'>
-                        <h2>Create project</h2>
+                        <h2>Create Project</h2>
                         <form method='post'>
                             <input type="text" placeholder='Title' name='title'>
                             <textarea name="description" placeholder='Description'></textarea>
@@ -188,7 +188,7 @@
                 }else if(!empty($_POST['editStudentButton']) || !empty($_POST['editStudentShow'])){
                 ?>
                     <div class='editStudent'>
-                        <h2>Edit student</h2>
+                        <h2>Edit Student</h2>
                         <form method='post'>
                             <?php
                                 $student = searchStudent($connection, $_POST['editStudentShow'], null, null, null);
@@ -209,6 +209,7 @@
                 }else if(!empty($_POST['changeProfilePhotoShow']) || !empty($_POST['changeProfilePhotoButton'])){
                 ?>
                     <div class='changeProfilePhoto'>
+                        <h2>Change Profile Photo</h2>
                         <form method="post" enctype="multipart/form-data">
                             <input type="file" name="profilePhoto" accept="image/*">
                             <button type="submit" name="changeProfilePhotoButton" value='SAVE'>SAVE</button>

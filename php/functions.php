@@ -318,4 +318,32 @@
 
         header('Location: index.php');
     }
+
+    function getScore($connection,$score,$student_id,$item_id){
+        $sql = 'SELECT * FROM score WHERE student_id = '.$student_id.' AND item_id = '.$item_id;
+
+        $query = mysqli_query($connection,$sql);
+
+        if ($query && mysqli_num_rows($query) > 0) {
+            return $query;
+        } else {
+            return null;
+        }
+    }
+
+    function addScore($connection,$score,$student_id,$item_id){
+        $sql = "INSERT INTO score(score, student_id, item_id) VALUES($score, $student_id, $item_id)";
+
+        mysqli_query($connection,$sql);
+
+        header('Location: index.php');
+    }
+
+    function modifyScore($connection,$score,$student_id,$item_id){
+        $sql = "UPDATE score SET score = $score WHERE student_id = $student_id AND item_id = $item_id";
+
+        mysqli_query($connection,$sql);
+
+        header('Location: index.php');
+    }
 ?>

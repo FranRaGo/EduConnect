@@ -22,6 +22,31 @@
             deleteActivity($connection,$_POST['deleteActivityButton']);
         }
 
+        if (!empty($_POST['scoreActivityButton']) || !empty($_POST['scoreActivity'])) { 
+            $students = getStudents($connection, $_SESSION['user'][6]);
+            if(!empty($_POST['scoreActivityButton'])){
+                $items = getItems($connection, $_POST['scoreActivityButton']);
+            }else if(!empty($_POST['scoreActivity'])){
+                $items = getItems($connection, $_POST['scoreActivity']);
+            }
+
+            if(!empty($_POST['scoreActivity'])){
+                echo $_POST['score'].$_POST['student'].$_POST['item'];
+            }
+        
+            if (!$students || !$items) {
+                $error = 'There are no students or items available for this activity';
+            }else if(!empty($_POST['scoreActivity']) && !(intval($_POST['score']) >= 0 && intval($_POST['score']) <= 10)){
+                $error = 'The score is not valid';
+            }else if(!empty($_POST['scoreActivity'])){
+                if(getScore($connection,$_POST['score'],$_POST['student'],$_POST['item'])){
+                    modifyScore($connection,$_POST['score'],$_POST['student'],$_POST['item']);
+                }else{
+                    addScore($connection,$_POST['score'],$_POST['student'],$_POST['item']);
+                }
+            }
+        }
+
         if(!empty($_POST['addActivityButton']) || !empty($_POST['modifyActivityButton'])){
 
             if(!empty($_POST['title']) && !empty($_POST['description'])){
@@ -148,7 +173,14 @@
                                         <img src="../../images/icons/bin_icon.svg" alt="Delete Activity" style="width:20px;">
                                     </button>
                                 </form>
-                                <img src="../../images/icons/score_icon.png" alt="Score Activity" style="width:20px;">
+                                <form method="post">
+                                    <button type='submit' name='scoreActivityButton' value='<?php echo htmlspecialchars($row['id']) ?>'>
+                                        <img src="../../images/icons/score_icon.png" alt="Score Activity" style="width:20px;">
+                                    </button>
+                                </form>
+                                <?php if ($error && !empty($_POST['scoreActivityButton']) && $_POST['scoreActivityButton'] === $row['id']): ?>
+                                        <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <?php
@@ -177,6 +209,7 @@
     </div>
     <?php if(!empty($_POST['editProjectButton'])){ ?>
         <div class='editContainer'>
+            <h2>Edit Project</h2>
             <form method="post">
                 <input type="text" name="title" value='<?php echo $project[1] ?>' placeholder='Project title'>
                 <textarea name="description" placeholder='Project title'><?php echo $project[2] ?></textarea>
@@ -197,6 +230,7 @@
         </div>
     <?php } else if(!empty($_POST['addActivity']) || (!empty($_POST['addActivityButton']) && $error)){ ?>
         <div class='addContainer'>
+            <h2>Make Activity</h2>
             <form method="post" enctype="multipart/form-data">               
                 <input type="text" name='title' placeholder='Title'>
                 <textarea name="description" placeholder='Description'></textarea>
@@ -244,6 +278,7 @@
         $items = getItems($connection,$activity[0]);
         ?>
         <div class='addContainer'>
+            <h2>Edit Activity</h2>
             <form method="post" enctype="multipart/form-data">               
                 <input type="text" name='title' placeholder='Title' value='<?php echo htmlspecialchars($activity[1]) ?>'>
                 <textarea name="description" placeholder='Description'><?php echo htmlspecialchars($activity[2]) ?></textarea>
@@ -266,15 +301,18 @@
                     </tr>
                     <?php
                         $index = 0;
-                        while ($row = mysqli_fetch_assoc($items)) {
-                            ?>
-                            <tr>
-                                <td><input type="text" name="item<?php echo $index + 1; ?>" value='<?php echo htmlspecialchars($row['title']) ?>'></td>
-                                <td><input type="number" name="value<?php echo $index + 1; ?>" placeholder="%" value='<?php echo htmlspecialchars($row['value']) ?>'></td>
-                                <td><input type="file" name="icon<?php echo $index + 1; ?>" accept="image/*" value='dad'></td>
-                            </tr>
-                            <?php
-                            $index++;
+
+                        if($items){
+                            while ($row = mysqli_fetch_assoc($items)) {
+                                ?>
+                                <tr>
+                                    <td><input type="text" name="item<?php echo $index + 1; ?>" value='<?php echo htmlspecialchars($row['title']) ?>'></td>
+                                    <td><input type="number" name="value<?php echo $index + 1; ?>" placeholder="%" value='<?php echo htmlspecialchars($row['value']) ?>'></td>
+                                    <td><input type="file" name="icon<?php echo $index + 1; ?>" accept="image/*" value='dad'></td>
+                                </tr>
+                                <?php
+                                $index++;
+                            }
                         }
                         for($i = $index ; $i < 4 ; $i++){
                             ?>
@@ -306,6 +344,38 @@
                 <?php endif; ?>
             </form>
         </div>
-    <?php } ?>
+        <?php } else if ((!empty($_POST['scoreActivityButton']) && !$error) || (!empty($_POST['scoreActivity']) && $error)){ 
+                if(!empty($_POST['scoreActivityButton'])){
+                    $items = getItems($connection, $_POST['scoreActivityButton']);
+                }else if(!empty($_POST['scoreActivity'])){
+                    $items = getItems($connection, $_POST['scoreActivity']);
+                } ?>
+            <div class='addContainer'>
+               <h2>Score Activity</h2>
+               <form method="post">
+                    <input type="number" name='score' placeholder='Score(0-10)'>
+                    <select name="student">
+                    <?php while($row = mysqli_fetch_assoc($students)){ ?>
+                        <option value="<?php echo htmlspecialchars($row['id']) ?>"><?php echo htmlspecialchars($row['name'].' '.$row['surnames']) ?></option>
+                    <?php } ?>
+                    </select>
+                    <select name="item">
+                    <?php while($row = mysqli_fetch_assoc($items)){ ?>
+                        <option value="<?php echo htmlspecialchars($row['id']) ?>"><?php echo htmlspecialchars($row['title']) ?></option>
+                    <?php } ?>
+                    </select>
+                    <button type="submit" name='scoreActivity' value='<?php if(!empty($_POST['scoreActivityButton'])){echo htmlspecialchars($_POST['scoreActivityButton']);
+                    }else if(!empty($_POST['scoreActivity'])){echo htmlspecialchars($_POST['scoreActivity']);} ?>'>
+                        Score
+                    </button>
+                    <button type="submit" name="backButton" value='back'>
+                        Cancel
+                    </button>
+               </form>
+               <?php if ($error && !empty($_POST['scoreActivity'])): ?>
+                    <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+                <?php endif; ?>    
+            </div>
+        <?php } ?>
 </body>
 </html>

@@ -22,6 +22,10 @@
             deleteActivity($connection,$_POST['deleteActivityButton']);
         }
 
+        if(!empty($_POST['deleteScoreButton'])){
+            deleteScore($connection,$_POST['deleteScoreButton']);
+        }
+
         if (!empty($_POST['scoreActivityButton']) || !empty($_POST['scoreActivity'])) { 
             $students = getStudents($connection, $_SESSION['user'][6]);
             if(!empty($_POST['scoreActivityButton'])){
@@ -346,10 +350,12 @@
         </div>
         <?php } else if ((!empty($_POST['scoreActivityButton']) && !$error) || (!empty($_POST['scoreActivity']) && $error)){ 
                 if(!empty($_POST['scoreActivityButton'])){
-                    $items = getItems($connection, $_POST['scoreActivityButton']);
+                    $activity_id = $_POST['scoreActivityButton'];
                 }else if(!empty($_POST['scoreActivity'])){
-                    $items = getItems($connection, $_POST['scoreActivity']);
-                } ?>
+                    $activity_id = $_POST['scoreActivity'];
+                } 
+                $items = getItems($connection, $activity_id);
+                ?>
             <div class='addContainer'>
                <h2>Score Activity</h2>
                <form method="post">
@@ -375,6 +381,48 @@
                <?php if ($error && !empty($_POST['scoreActivity'])): ?>
                     <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                 <?php endif; ?>    
+            </div>
+            <div class='scoreList'>
+                <?php
+                $items = getItems($connection, $activity_id);
+            
+                ?>
+                <h2>Score List</h2>
+                <?php
+
+                while($row = mysqli_fetch_assoc($items)){
+                    $scores = getScores($connection,$row['id']);
+                    ?>
+                    <h3><?php echo htmlspecialchars($row['title']) ?></h3>
+                    <?php
+                    if($scores){
+                        while($rowScores =  mysqli_fetch_assoc($scores)){
+    
+                            $student = getStudent($connection, $rowScores['student_id']);
+
+                            ?>
+                            <table>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($student[1].' '.$student[2]) ?></td>
+                                    <td><?php echo htmlspecialchars($rowScores['score']) ?></td>
+                                    <td>
+                                        <form method="post">
+                                            <button type='submit' name='deleteScoreButton' value='<?php echo htmlspecialchars($rowScores['id']) ?>'>
+                                                <img src="../../images/icons/bin_icon.svg" alt="Delete Activity" style="width:20px;">
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>    
+                            </table>
+                            <?php
+                        }
+                    }else{
+                        ?>
+                        <p>There are no scores assigned to this item</p>
+                        <?php
+                    }
+                }
+                ?>
             </div>
         <?php } ?>
 </body>

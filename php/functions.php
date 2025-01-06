@@ -28,6 +28,21 @@
         // Si no encuentra coincidencias, no retorna nada
     }
 
+    function getStudent($connection,$id){
+
+        $sql = 'SELECT * FROM students WHERE id ='.$id;
+
+        $query = mysqli_query($connection,$sql);
+
+        while($row = mysqli_fetch_assoc($query)){
+            if($row['id'] === $id){
+                return[$row['id'],$row['name'],$row['surnames'],$row['gmail']];
+            }
+        }
+
+        return null;
+    }
+
     // Función para obtener todos los registros de la tabla "students"
     function students($connection){
         // Consulta para seleccionar todos los registros de "students"
@@ -319,6 +334,19 @@
         header('Location: index.php');
     }
 
+    function getScores($connection,$item_Id){
+        $sql = 'SELECT * FROM score WHERE item_id = '.$item_Id;
+
+        $query = mysqli_query($connection,$sql);
+
+        if ($query && mysqli_num_rows($query) > 0) {
+            return $query;
+        } else {
+            return null;
+        } 
+        
+    }
+
     function getScore($connection,$score,$student_id,$item_id){
         $sql = 'SELECT * FROM score WHERE student_id = '.$student_id.' AND item_id = '.$item_id;
 
@@ -336,7 +364,7 @@
 
         mysqli_query($connection,$sql);
 
-        header('Location: index.php');
+        header('Location: editProject.php?id='.$_GET['id']);
     }
 
     function modifyScore($connection,$score,$student_id,$item_id){
@@ -344,6 +372,14 @@
 
         mysqli_query($connection,$sql);
 
-        header('Location: index.php');
+        header('Location: editProject.php?id='.$_GET['id']);
+    }
+
+    function deleteScore($connection,$score_id){
+        $sql = 'DELETE FROM score WHERE id = '.$score_id;
+
+        mysqli_query($connection, $sql);
+    
+        header('Location: editProject.php?id='.$_GET['id']);
     }
 ?>

@@ -6,3 +6,4 @@ $bbdd = 'micro02';
 
 $connection = mysqli_connect($server,$user,$pass,$bbdd);
 ?>
+

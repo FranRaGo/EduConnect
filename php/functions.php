@@ -389,14 +389,14 @@
         $file = fopen($fileRoute, "r");
         
         // Leer y procesar cada línea del CSV
-        while (($datos = fgetcsv($file)) !== FALSE) {
-            $id = $datos[0];
-            $name = $datos[1];
-            $surnames = $datos[2];
-            $password = $datos[3];
-            $course_id = $datos[5];
-            $gmail = $datos[6];
-            $DNI = $datos[7];
+        while (($data = fgetcsv($file)) !== FALSE) {
+            $id = $data[0];
+            $name = $data[1];
+            $surnames = $data[2];
+            $password = $data[3];
+            $course_id = $data[5];
+            $gmail = $data[6];
+            $DNI = $data[7];
     
     
             // Insertar datos en la base de datos

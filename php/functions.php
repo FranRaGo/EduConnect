@@ -382,4 +382,31 @@
     
         header('Location: editProject.php?id='.$_GET['id']);
     }
+
+    function importStudents($connection,$fileRoute){
+         
+        // Abrir y leer el archivo CSV
+        $file = fopen($fileRoute, "r");
+        
+        // Leer y procesar cada línea del CSV
+        while (($datos = fgetcsv($file)) !== FALSE) {
+            $id = $datos[0];
+            $name = $datos[1];
+            $surnames = $datos[2];
+            $password = $datos[3];
+            $course_id = $datos[5];
+            $gmail = $datos[6];
+            $DNI = $datos[7];
+    
+    
+            // Insertar datos en la base de datos
+            $sql = "INSERT INTO students (name, surnames, password, course_id, gmail, DNI) VALUES ('$name', '$surnames', '$password', $course_id, '$gmail', '$DNI')";
+            mysqli_query($connection,$sql);
+        }
+    
+        // Cerrar archivo
+        fclose($file);
+
+        header('Location: index.php');
+    }
 ?>

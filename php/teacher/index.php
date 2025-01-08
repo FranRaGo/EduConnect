@@ -10,10 +10,21 @@
         header('Location: ../login/login.php');
     }
 
+    if(!empty($_POST['logoutButton'])){
+        session_unset();
+        session_destroy();
+        header('Location: ../login/login.php');
+        exit();
+    }
+
     $profilePicture = '../../images/profile_images/default.png';
 
     if(!empty($_SESSION['user'][5])){
         $profilePicture = '../../images/profile_images/'.$_SESSION['user'][5];
+    }
+
+    if(!empty($_POST['importSubmit'])){
+        importStudents($connection,$_FILES['studentsFile']['tmp_name']);
     }
 
     if(!empty($_POST['cancelButton'])){
@@ -69,6 +80,14 @@
     <title>TeacherHome</title>
 </head>
 <body>
+    <header>
+        <img src="" alt="icon" style="width:20px;">
+        <form method="post">
+            <button type='submit' name='logoutButton' value='logout'>
+                <img src="../../images/icons/logout_icon.png" alt="Logout" style="width:20px;">
+            </button>
+        </form>
+    </header>
     <div>
         <div>
             <img src="<?php echo htmlspecialchars($profilePicture); ?>" alt="profilePicture" style='width:40px;'>
@@ -150,7 +169,9 @@
             ?>
                 <input type="submit" name='addStudentShow' value='+'>
             </form>
-            <button>Import Students</button>
+            <form method="post">
+                <input type="submit" name='importButton' value='Import Students'>
+            </form>
         </div>
         <div class='action'>
                 <?php
@@ -219,6 +240,17 @@
                     <?php if ($error): ?>
                             <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                     <?php endif; ?>
+                <?php
+               }else if(!empty($_POST['importButton'])){
+                ?>
+                    <div class='changeProfilePhoto'>
+                        <h2>Import File</h2>
+                        <form method="post" enctype="multipart/form-data">
+                            <input type="file" name="studentsFile" accept=".csv">
+                            <button type="submit" name="importSubmit" value='SAVE'>Import</button>
+                            <button type='submit' name='cancelButton'><img src="../../images/icons/close_icon.png" alt="Cancel" style="width:20px;"></button>
+                        </form>
+                    </div>
                 <?php
                 }
                 ?>

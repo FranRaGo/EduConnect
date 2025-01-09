@@ -347,13 +347,14 @@
         
     }
 
-    function getScore($connection,$score,$student_id,$item_id){
+    function getScore($connection,$student_id,$item_id){
         $sql = 'SELECT * FROM score WHERE student_id = '.$student_id.' AND item_id = '.$item_id;
 
         $query = mysqli_query($connection,$sql);
 
         if ($query && mysqli_num_rows($query) > 0) {
-            return $query;
+            $row = mysqli_fetch_assoc($query);
+            return $row['score'];
         } else {
             return null;
         }
@@ -408,5 +409,45 @@
         fclose($file);
 
         header('Location: index.php');
+    }
+
+    function getScoreActivity($connection,$student_id,$activity_id){
+        $items = getItems($connection,$activity_id);
+        $score = 0;
+        
+        if($items && mysqli_num_rows($items) > 0){
+            while($row = mysqli_fetch_assoc($items)){
+                $itemScore = getScore($connection,$student_id,$row['id']);
+                $score += intval($itemScore) * (intval($row['value']) / 100); 
+                if(!$itemScore){
+                    return null;
+                }
+            }
+        }else{
+            return null;
+        }
+
+        return $score;
+    }
+    
+    function getScoreProyect($connection,$student_id,$project_id){
+        $activities = getActivities($connection,$project_id);
+        $count = 0;
+        $score = 0;
+
+        if($activities && mysqli_num_rows($activities) > 0){
+            while($row = mysqli_fetch_assoc($activities)){
+                $score += getScoreActivity($connection,$student_id,$row['id']);
+                $count++;
+
+                if(!getScoreActivity($connection,$student_id,$row['id'])){
+                    return null;
+                }
+            }
+        }else{
+            return null;
+        }
+
+        return $score / $count;
     }
 ?>

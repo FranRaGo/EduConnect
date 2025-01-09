@@ -52,7 +52,7 @@
             }else if(!empty($_POST['scoreActivity']) && !(intval($_POST['score']) >= 0 && intval($_POST['score']) <= 10)){
                 $error = 'The score is not valid';
             }else if(!empty($_POST['scoreActivity'])){
-                if(getScore($connection,$_POST['score'],$_POST['student'],$_POST['item'])){
+                if(getScore($connection,$_POST['student'],$_POST['item'])){
                     modifyScore($connection,$_POST['score'],$_POST['student'],$_POST['item']);
                 }else{
                     addScore($connection,$_POST['score'],$_POST['student'],$_POST['item']);

@@ -88,8 +88,8 @@
             </button>
         </form>
     </header>
-    <div>
-        <div>
+    <div class='profileInfo'>
+        <div class='profilePhoto'>
             <img src="<?php echo htmlspecialchars($profilePicture); ?>" alt="profilePicture" style='width:40px;'>
             <form method="post">
                 <button type="submit" name="changeProfilePhotoShow" value="1">
@@ -97,7 +97,7 @@
                 </button>
             </form>
         </div>
-        <div>
+        <div class='userInfo'>
             <h1><?php echo htmlspecialchars($_SESSION['user'][1].' '.$_SESSION['user'][2]); ?></h1>
             <p><?php echo htmlspecialchars($_SESSION['user'][3]); ?></p>
         </div>
@@ -243,7 +243,7 @@
                 <?php
                }else if(!empty($_POST['importButton'])){
                 ?>
-                    <div class='changeProfilePhoto'>
+                    <div class='importStudents'>
                         <h2>Import File</h2>
                         <form method="post" enctype="multipart/form-data">
                             <input type="file" name="studentsFile" accept=".csv">

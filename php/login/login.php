@@ -65,14 +65,19 @@ if (!empty($_POST['loginButton']) || !empty($_POST['classButton'])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login</title>
+        <link rel="stylesheet" href="../../css/login/login.css">
     </head>
     <body>
-        <div>
+        <div class="container_login">
             <!-- Formulario de inicio de sesión -->
             <form method="post">
-                <p>Who are you?</p>
+                <div class="logo">
+                    <img src="../../images/logo/logoWhite.png" alt="logo">
+                </div>
+                <h1>Welcome to EduConnect!</h1>
+                <p>Please login to your account</p>
                 <input type="text" name="user" placeholder="Gmail">
-                <input type="password" name="pass" placeholder="Password">
+                <input type="password" name="pass" placeholder="Password"> 
                 <!-- Botón para enviar el formulario, mantiene el valor del tipo de usuario seleccionado -->
                 <button type="submit" name="loginButton" value="<?php echo htmlspecialchars($clickedValue); ?>">Login</button>
             </form>

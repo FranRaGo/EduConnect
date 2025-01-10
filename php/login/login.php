@@ -95,18 +95,34 @@ if (!empty($_POST['loginButton']) || !empty($_POST['classButton'])) {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>PreLogin</title>
+        <link rel="stylesheet" href="../../css/login/preLogin.css">
     </head>
     <body>
-        <div>
-            <!-- Formulario para seleccionar el tipo de usuario -->
-            <form method="post">
-                <p>You are a...</p>
-                <!-- Botón para indicar que es un estudiante -->
-                <input type="submit" name="classButton" value="Student">
-                <!-- Botón para indicar que es un profesor -->
-                <input type="submit" name="classButton" value="Teacher">
-            </form>
+    <div class="container_prelogin">
+        <div class="form-container">
+            <img src="../../images/logo/logoBlue.png" alt="logo" class="logo">
+            <div class="buttons-container">
+                <!-- Formulario para estudiantes -->
+                <form method="post">
+                    <button type="submit" name="classButton" value="Student">
+                        <div class="card">
+                            <div class="img-student"></div>
+                            <span>Student</span>
+                        </div>
+                    </button>
+                </form>
+                <!-- Formulario para profesores -->
+                <form method="post">
+                    <button type="submit" name="classButton" value="Teacher">
+                        <div class="card">
+                            <div class="img-teacher"></div>
+                            <span>Teacher</span>
+                        </div>
+                    </button>
+                </form>
+            </div>
         </div>
+    </div>
     </body>
     </html>
     <?php

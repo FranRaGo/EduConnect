@@ -14,7 +14,7 @@ body {
     background: #fff;
     display: flex;
     justify-content: center;
-    alignt-items: center;
+    align-items: center;
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
@@ -88,4 +88,42 @@ button {
 
 button:hover {
     background: #36C9C6;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    body {
+        padding: 20px;
+    }
+
+    .container_login {
+        width: 100%;
+        max-width: 320px;
+        padding: 20px;
+    }
+
+    .logo img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 12px;
+        margin-bottom: 15px;
+    }
+
+    input {
+        padding: 5px;
+        font-size: 14px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 14px;
+    }
 }

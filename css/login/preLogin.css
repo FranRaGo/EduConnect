@@ -113,3 +113,30 @@ button {
     height: 280px;
     margin-bottom: 0px
 }
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    .form-container {
+        width: 90%;
+        padding: 30px;
+        gap: 20px;
+    }
+
+    .buttons-container {
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        width: 180px;
+    }
+
+    .img-student, .img-teacher {
+        height: 120px;
+    }
+
+    .logo {
+        width: 220px;
+        height: 220px;
+    }
+}

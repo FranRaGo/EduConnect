@@ -1,0 +1,167 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #E6EBE0;
+    font-family: Arial, sans-serif;
+
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #2C3E50;
+    align-items: center;
+    width: 100%;
+}
+
+.logo{
+    height: 70px;
+}
+
+img{
+    height: 30px;
+}
+
+button, .button{
+    background-color:#2C3E5000;
+    border: 0;
+}
+
+button:hover, .button:hover{
+    cursor: pointer;
+}
+
+.button{
+    background-color: #F4F1BB;
+    border: solid 3px #36C9C6;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+.import{
+    width: 120px;
+}
+
+.profileInfo {
+    display: flex;
+    justify-content: space-between;
+    background-color: #9BC1BC;
+    padding: 30px;
+    margin: 50px;
+    gap: 20px;
+    margin-inline: 140px;
+    border-radius: 10px;
+    border: solid 3px #36C9C6;
+}
+
+.profilePhoto{
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 1000px;
+}
+
+.profilePhotoSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: right;
+    width: 850px;
+    margin-bottom: 30px;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    margin-inline: 200px;
+    height: 500px;
+
+}
+
+.projects, .students, .actions{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: 40px;
+    width: 300px;
+    text-align: center;
+}
+
+.scroll{
+    max-height: 490px;
+    overflow: scroll;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+
+}
+
+.project, .student, .action{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    background-color: #F4F1BB;
+    border: solid 3px #36C9C6;
+    border-radius: 10px;
+    padding: 15px;
+    padding-top: 40px;
+    width: 100%;
+
+
+}
+
+.action form{
+    margin-bottom: 25px;
+}
+
+.sub{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+input[type="text"],  textarea{
+    background-color: #E6EBE0;
+    border: solid 2px #36C9C6;
+    padding: 6px;
+    border-radius: 10px;
+    width: 200px;
+}
+  
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+
+  

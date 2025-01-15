@@ -80,13 +80,13 @@ if (!empty($_POST['loginButton']) || !empty($_POST['classButton'])) {
                 <input type="password" name="pass" placeholder="Password"> 
                 <!-- Botón para enviar el formulario, mantiene el valor del tipo de usuario seleccionado -->
                 <button type="submit" name="loginButton" value="<?php echo htmlspecialchars($clickedValue); ?>">Login</button>
-            </form>
             <?php
             // Muestra el mensaje de error si existe
             if ($error) {
                 echo "<p style='color:red;'>$error</p>";
             }
             ?>
+            </form>
         </div>
     </body>
     </html>

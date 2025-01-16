@@ -42,10 +42,6 @@
             }else if(!empty($_POST['scoreActivity'])){
                 $items = getItems($connection, $_POST['scoreActivity']);
             }
-
-            if(!empty($_POST['scoreActivity'])){
-                echo $_POST['score'].$_POST['student'].$_POST['item'];
-            }
         
             if (!$students || !$items) {
                 $error = 'There are no students or items available for this activity';
@@ -113,7 +109,6 @@
                     if(!empty($_POST['addActivityButton']) && !$error){
                         addActivity($connection,$project[0],$_POST['title'],$_POST['description'],$arrItems);
                     } else if(!empty($_POST['modifyActivityButton']) && !$error ){
-                        echo 'Modificar actividad';
                         modifyItems($connection,$_POST['modifyActivityButton'],$arrItems);
                         modifyActivity($connection,$_POST['modifyActivityButton'],$_POST['title'],$_POST['description'],$_POST['finalized']);
                     }
@@ -132,27 +127,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Project</title>
+    <link rel="stylesheet" href="../../css/teacher/editProject.css">
 </head>
 <body>
     <header>
-        <img src="" alt="icon" style="width:20px;">
+        <img class='logo' src="../../images/logo/logoWhite.png" alt="icon">
         <form method="post">
             <button type='submit' name='logoutButton' value='logout'>
-                <img src="../../images/icons/logout_icon.png" alt="Logout" style="width:20px;">
+                <img src="../../images/icons/logout_icon.png" alt="Logout">
             </button>
         </form>
     </header>
     <div class='container'>
-        <div class='projectContainer'>
-            <div>
+
+        <div class='containerProject'>
+            <div class='projectContainer'>
                 <h1><?php echo htmlspecialchars($project[1])?></h1>
-                <p><?php echo ($project[3]) ? 'Finalizado' : 'En progreso'; ?></p>
+                <p><?php echo ($project[3]) ? 'Finalized' : 'In Progress'; ?></p>
             </div>
             <p><?php echo htmlspecialchars($project[2]) ?></p>
-        </div>
-        <div class='activitiesContainer'>
-            <div class='activities'>
-                <?php
+            <div class='activitiesContainer'>
+                <div class='activities'>
+                    <?php
             $activities = getActivities($connection,$project[0]);
             
             if($activities != null){
@@ -163,7 +159,7 @@
                             <h2><?php echo htmlspecialchars($row['title'])?></h2>
                             <form method="post">
                                 <button type='submit' name='modifyActivity' value='<?php echo htmlspecialchars($row['id']) ?>'>
-                                    <img src="../../images/icons/edit_icon.svg" alt="Edit Activity" style="width:20px;">
+                                    <img src="../../images/icons/edit_icon.svg" alt="Edit Activity">
                                 </button>
                             </form>
                         </div>
@@ -177,7 +173,7 @@
                                         ?>
                                             <div class='item'>
                                                 <p><?php echo htmlspecialchars($rowItem['title']."(".$rowItem['value'].")")?></p>
-                                                <img src="<?php echo htmlspecialchars('../../images/items_icons/'.$rowItem['icon'])?>" alt="Item Icon" style="width:20px;">
+                                                <img src="<?php echo htmlspecialchars('../../images/items_icons/'.$rowItem['icon'])?>" alt="Item Icon">
                                             </div>
                                             <?php
                                     }
@@ -188,22 +184,23 @@
                             </div>
                             <p><?php echo htmlspecialchars($row['description'])?></p>
                         </div>
-                        <div class='ActivityRight'>
-                            <form method="post">
-                                <button type='submit' name='deleteActivityButton' value='<?php echo htmlspecialchars($row['id']) ?>'>
-                                    <img src="../../images/icons/bin_icon.svg" alt="Delete Activity" style="width:20px;">
-                                </button>
-                            </form>
-                            <form method="post">
-                                <button type='submit' name='scoreActivityButton' value='<?php echo htmlspecialchars($row['id']) ?>'>
-                                    <img src="../../images/icons/score_icon.png" alt="Score Activity" style="width:20px;">
-                                </button>
-                            </form>
-                            <?php if ($error && !empty($_POST['scoreActivityButton']) && $_POST['scoreActivityButton'] === $row['id']): ?>
-                                <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
-                                <?php endif; ?>
+                        <div class='activityRight'>
+                            <p><?php echo ($row['finalized']) ? 'Finalized' : 'In Progress'; ?></p>
+                            <div class='buttonContainer'>
+                                <form method="post">
+                                    <button type='submit' name='deleteActivityButton' value='<?php echo htmlspecialchars($row['id']) ?>'>
+                                        <img src="../../images/icons/bin_icon.svg" alt="Delete Activity">
+                                    </button>
+                                    <button type='submit' name='scoreActivityButton' value='<?php echo htmlspecialchars($row['id']) ?>'>
+                                        <img src="../../images/icons/score_icon.png" alt="Score Activity">
+                                    </button>
+                                </div>
+                                </form>
+                                <?php if ($error && !empty($_POST['scoreActivityButton']) && $_POST['scoreActivityButton'] === $row['id']): ?>
+                                    <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+                                    <?php endif; ?>
+                                </div>
                             </div>
-                        </div>
                         <?php
                 }
             }else{
@@ -213,23 +210,23 @@
         </div>
         <form method="post">
             <button type='submit' name='addActivity' value='Add'>
-                <img src="../../images/icons/more_icon.png" alt="Add" style="width:20px;">
+                <img src="../../images/icons/more_icon.png" alt="Add">
             </button>
         </form>
     </div>
     <div class='action'>
         <form method="post">
             <button type="submit" name="editProjectButton" value='edit'>
-                <img src="../../images/icons/edit_icon.svg" alt="delete" style="width:20px;">
+                <img src="../../images/icons/edit_icon.svg" alt="delete">
             </button>
             <button type="submit" name="backButton" value='back'>
-                <img src="../../images/icons/close_icon.png" alt="Back" style="width:20px;">
+                <img src="../../images/icons/close_icon.png" alt="Back">
             </button>
         </form>
     </div>
 </div>
 <?php if(!empty($_POST['editProjectButton'])){ ?>
-    <div class='editContainer'>
+    <div class='containerAction'>
         <h2>Edit Project</h2>
         <form method="post">
             <input type="text" name="title" value='<?php echo $project[1] ?>' placeholder='Project title'>
@@ -245,12 +242,14 @@
                         <option value=1>Finalized</option>
                     </select>
                     <?php } ?>
-                    <input type="submit" name="editApplyProjectButton" value='Apply'>
-                    <input type="submit" name="cancelButton" value='Cancel'>
+                    <div class='buttonContainer'>
+                        <input class='button' type="submit" name="editApplyProjectButton" value='Apply'>
+                        <input class='button' type="submit" name="cancelButton" value='Cancel'>
+                    </div>
                 </form>
             </div>
             <?php } else if(!empty($_POST['addActivity']) || (!empty($_POST['addActivityButton']) && $error)){ ?>
-                <div class='addContainer'>
+                <div class='containerAction'>
                     <h2>Make Activity</h2>
                     <form method="post" enctype="multipart/form-data">               
                         <input type="text" name='title' placeholder='Title'>
@@ -264,25 +263,47 @@
                             <tr>
                                 <td><input type="text" name='item1'></td>
                                 <td><input type="number" name='value1' placeholder='%'></td>
-                                <td><input type="file" name='icon1' accept="image/*"></td>
+                                <td>
+                                    <label for="file-upload1" class="custom-file-upload">
+                                    Upload File
+                                </label>
+                                <input id="file-upload1" type="file" name="icon1" accept="image/*"> 
+                                </td>
                             </tr>
                             <tr>
                                 <td><input type="text" name='item2'></td>
                                 <td><input type="number" name='value2' placeholder='%'></td>
-                                <td><input type="file" name='icon2' accept="image/*"></td>
+                                <td>
+                                    <label for="file-upload2" class="custom-file-upload">
+                                    Upload File
+                                </label>
+                                <input id="file-upload2" type="file" name="icon2" accept="image/*"> 
+                                </td>                            
                             </tr>
                             <tr>
                                 <td><input type="text" name='item3'></td>
                                 <td><input type="number" name='value3' placeholder='%'></td>
-                                <td><input type="file" name='icon3' accept="image/*"></td>
+                                <td>
+                                    <label for="file-upload3" class="custom-file-upload">
+                                    Upload File
+                                </label>
+                                <input id="file-upload3" type="file" name="icon3" accept="image/*"> 
+                                </td>                            
                             </tr>
                             <tr>
                                 <td><input type="text" name='item4'></td>
                                 <td><input type="number" name='value4' placeholder='%'></td>
-                                <td><input type="file" name='icon4' accept="image/*"></td>
+                                <td>
+                                    <label for="file-upload4" class="custom-file-upload">
+                                    Upload File
+                                </label>
+                                <input id="file-upload4" type="file" name="icon4" accept="image/*"> 
+                                </td>                            
                             </tr>
-                            <input type="submit" name='addActivityButton' value='Add'>
-                            <input type="submit" name="cancelButton" value='Cancel'>
+                            <div class='buttonContainer'>
+                                <input class='button' type="submit" name='addActivityButton' value='Add'>
+                                <input class='button' type="submit" name="cancelButton" value='Cancel'>
+                            </div>
                         </table>
                         <?php if ($error): ?>
                             <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
@@ -298,7 +319,7 @@
                         
                         $items = getItems($connection,$activity[0]);
                         ?>
-    <div class='addContainer'>
+    <div class='containerAction'>
         <h2>Edit Activity</h2>
         <form method="post" enctype="multipart/form-data">               
             <input type="text" name='title' placeholder='Title' value='<?php echo htmlspecialchars($activity[1]) ?>'>
@@ -329,7 +350,12 @@
                             <tr>
                                 <td><input type="text" name="item<?php echo $index + 1; ?>" value='<?php echo htmlspecialchars($row['title']) ?>'></td>
                                 <td><input type="number" name="value<?php echo $index + 1; ?>" placeholder="%" value='<?php echo htmlspecialchars($row['value']) ?>'></td>
-                                <td><input type="file" name="icon<?php echo $index + 1; ?>" accept="image/*" value='dad'></td>
+                                <td>
+                                <label for="<?php echo htmlspecialchars("file-upload".$index + 1) ?>" class="custom-file-upload">
+                                    Upload File
+                                </label>
+                                <input id="<?php echo htmlspecialchars("file-upload".$index + 1) ?>" type="file" name="icon<?php echo $index + 1; ?>" accept="image/*"> 
+                            </td>
                             </tr>
                             <?php
                             $index++;
@@ -340,25 +366,32 @@
                         <tr>
                             <td><input type="text" name="item<?php echo $i + 1; ?>"></td>
                             <td><input type="number" name="value<?php echo $i + 1; ?>" placeholder="%"></td>
-                            <td><input type="file" name="icon<?php echo $i + 1; ?>" accept="image/*"></td>
+                            <td>
+                                <label for="<?php echo htmlspecialchars("file-upload".$i + 1) ?>" class="custom-file-upload">
+                                    Upload File
+                                </label>
+                                <input id="<?php echo htmlspecialchars("file-upload".$i + 1) ?>" type="file" name="icon<?php echo $i + 1; ?>" accept="image/*"> 
+                            </td>
                         </tr>
                         <?php   
                     }
+                    ?> <div class='buttonContainer'> <?php
                     if(!empty($_POST['modifyActivity'])){
                         ?>
-                            <button type="submit" name='modifyActivityButton' value='<?php echo htmlspecialchars($_POST['modifyActivity']) ?>'>
+                            <button class='button' type="submit" name='modifyActivityButton' value='<?php echo htmlspecialchars($_POST['modifyActivity']) ?>'>
                                 Apply
                             </button>
                             <?php
                     }else if(!empty($_POST['modifyActivityButton'])){
                         ?>
-                            <button type="submit" name='modifyActivityButton' value='<?php echo htmlspecialchars($_POST['modifyActivityButton']) ?>'>
+                            <button class='button' type="submit" name='modifyActivityButton' value='<?php echo htmlspecialchars($_POST['modifyActivityButton']) ?>'>
                                 Apply
                             </button>
                             <?php                        
                     }
                     ?>
-                <input type="submit" name="cancelButton" value='Cancel'>
+                <input class='button' type="submit" name="cancelButton" value='Cancel'>
+                </div>
             </table>
             <?php if ($error): ?>
                 <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
@@ -373,10 +406,9 @@
             } 
             $items = getItems($connection, $activity_id);
             ?>
-        <div class='addContainer'>
+        <div class='containerAction'>
             <h2>Score Activity</h2>
             <form method="post">
-                <input type="number" name='score' placeholder='Score(0-10)'>
                 <select name="student">
                     <?php while($row = mysqli_fetch_assoc($students)){ ?>
                         <option value="<?php echo htmlspecialchars($row['id']) ?>"><?php echo htmlspecialchars($row['name'].' '.$row['surnames']) ?></option>
@@ -387,18 +419,21 @@
                             <option value="<?php echo htmlspecialchars($row['id']) ?>"><?php echo htmlspecialchars($row['title']) ?></option>
                             <?php } ?>
                         </select>
-                        <button type="submit" name='scoreActivity' value='<?php if(!empty($_POST['scoreActivityButton'])){echo htmlspecialchars($_POST['scoreActivityButton']);
+                        <input type="number" name='score' placeholder='0-10' required min="0" max="10">
+                        <div class='buttonContainer'>
+                            <button class='button' type="submit" name='scoreActivity' value='<?php if(!empty($_POST['scoreActivityButton'])){echo htmlspecialchars($_POST['scoreActivityButton']);
                 }else if(!empty($_POST['scoreActivity'])){echo htmlspecialchars($_POST['scoreActivity']);} ?>'>
                     Score
                 </button>
-                <button type="submit" name="backButton" value='back'>
+                <button class='button' type="submit" name="backButton" value='back'>
                     Cancel
                 </button>
-            </form>
+            </div>
             <?php if ($error && !empty($_POST['scoreActivity'])): ?>
                 <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                 <?php endif; ?>    
             </div>
+            </form>
             <div class='scoreList'>
                 <?php
             $items = getItems($connection, $activity_id);
@@ -410,7 +445,7 @@
             ?>
                 <div class='scoreItemTitle'>
                     <h3><?php echo htmlspecialchars($row['title']) ?></h3>
-                    <img src="<?php echo htmlspecialchars('../../images/items_icons/'.$row['icon'])?>" alt="Item Icon" style="width:20px;">
+                    <img src="<?php echo htmlspecialchars('../../images/items_icons/'.$row['icon'])?>" alt="item">
                 </div>
                 <?php
                 if($scores){
@@ -426,7 +461,7 @@
                                 <td>
                                     <form method="post">
                                         <button type='submit' name='deleteScoreButton' value='<?php echo htmlspecialchars($rowScores['id']) ?>'>
-                                            <img src="../../images/icons/bin_icon.svg" alt="Delete Activity" style="width:20px;">
+                                            <img src="../../images/icons/bin_icon.svg" alt="Delete Activity">
                                         </button>
                                     </form>
                                 </td>
@@ -441,6 +476,7 @@
                 }
             }
             ?>
+            </div>
         </div>
     <?php } ?>
 </body>

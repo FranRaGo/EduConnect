@@ -1,0 +1,163 @@
+/* General Styles */
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E6EBE0;
+    height: 100vh;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ED6A5A;
+    color: white;
+    padding: 10px 20px;
+}
+
+.logo{
+    height: 70px;
+}
+
+button {
+    background-color: #2C3E5000;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Profile Section */
+.profileInfo {
+    background-color: #9BC1BC;
+    border: 3px solid #36C9C6;
+    padding: 30px;
+    margin: 50px;
+    margin-inline: 140px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+
+.profilePicture {
+    border-radius: 50%;
+    margin-right: 10px;
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+}
+
+
+
+.userInfo {
+    width: 850px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: right;
+    margin-bottom: 30px;
+   
+}
+
+
+/* Projects Section */
+.projects {
+    margin: 20px;
+}
+
+.projects h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.project {
+    width: 300px;
+    background-color: #F4F1BB;
+    border: 3px solid #36C9C6;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    text-align: left;
+    display: block;
+    text-decoration: none;
+    color: black;
+    transition: box-shadow 0.3s;
+}
+
+.project:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.project h3 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.project p {
+    margin: 10px 0;
+    font-size: 0.9rem;
+    color: #757575;
+}
+
+.subProject {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #616161;
+}
+
+/* Change Profile Photo Section */
+.changeProfilePhoto {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.changeProfilePhoto h2 {
+    margin: 0 0 15px 0;
+}
+
+.changeProfilePhoto form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.changeProfilePhoto button {
+    background-color: #ED6A5A;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.changeProfilePhoto button img {
+    width: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: #ED6A5A;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    width: 100%;
+    
+}
+
+footer p {
+    margin: 0;
+}

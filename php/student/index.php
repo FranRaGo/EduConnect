@@ -45,10 +45,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudentHome</title>
+    <link rel="stylesheet" href="../../css/student/student.css">
 </head>
 <body>
     <header>
-        <img src="" alt="icon" style="width:20px;">
+        <img src="../../images/logo/logoWhite.png" alt="icon" class='logo'>
         <form method="post">
             <button type='submit' name='logoutButton' value='logout'>
                 <img src="../../images/icons/logout_icon.png" alt="Logout" style="width:20px;">
@@ -57,7 +58,7 @@
     </header>
     <div class='profileInfo'>
         <div class='profilePhoto'>
-            <img src="<?php echo htmlspecialchars($profilePicture); ?>" alt="profilePicture" style='width:40px;'>
+            <img src="<?php echo htmlspecialchars($profilePicture); ?>" alt="profilePicture" class='profilePicture'>
             <form method="post">
                 <button type="submit" name="changeProfilePhotoShow" value="1">
                     <img src="../../images/icons/edit_icon.svg" alt="Change" style='width:20px;'>
@@ -112,5 +113,8 @@
         <?php endif; ?>
         <?php } ?>
     </div>
+    <footer>
+        <p>&copy; Fran Gonzalez & Alex Muñoz. Todos los derechos reservados. </p>
+    </footer>
 </body>
 </html>

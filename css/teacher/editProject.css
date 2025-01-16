@@ -1,0 +1,229 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #E6EBE0;
+    font-family: Arial, sans-serif;
+
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #2C3E50;
+    align-items: center;
+    width: 100%;
+}
+
+.logo{
+    height: 70px;
+}
+
+img{
+    height: 30px;
+}
+
+button, .button{
+    background-color:#2C3E5000;
+    border: 0;
+}
+
+button:hover, .button:hover{
+    cursor: pointer;
+}
+
+.button{
+    background-color: #F4F1BB;
+    border: solid 3px #36C9C6;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    align-items: center;
+    margin: 50px;
+
+}
+
+.containerProject{
+    background-color: #F4F1BB;
+    width: 100%;
+    padding: 30px;
+    border: solid 3px #36C9C6;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.projectContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonContainer{
+    display: flex;
+    justify-content: space-evenly;
+
+}
+
+.scoreList{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #F4F1BB;
+    padding: 30px;
+    border: solid 3px #36C9C6;
+    border-radius: 10px;
+}
+
+.activities{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-height: 350px;
+    overflow: scroll;
+}
+
+.activitiesContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    text-align: center;
+}
+
+.activity{
+    background-color: #9BC1BC;
+    border: solid 3px #36C9C6;
+    border-radius: 10px;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.activityLeft, .activityRight{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.activityLeft img, .activityRight img{
+    height: 25px;
+    width: 25px;
+
+}
+
+.action form{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.activityCenter{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.items{
+    display: flex;
+    justify-content: space-around;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.item img, .scoreItemTitle img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
+}
+
+.scoreItemTitle{
+    display: flex;
+    justify-content: space-between;
+}
+
+.containerAction{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #F4F1BB;
+    padding: 30px;
+    border: solid 3px #36C9C6;
+    border-radius: 10px;
+}
+
+.containerAction form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+
+input[type="text"],  textarea{
+    background-color: #E6EBE0;
+    border: solid 2px #36C9C6;
+    padding: 6px;
+    border-radius: 10px;
+    width: 200px;
+    width: 100%;
+
+}
+
+input[type="number"]{
+    background-color: #E6EBE0;
+    border: solid 2px #36C9C6;
+    padding: 6px;
+    border-radius: 10px;
+    width: 60px;
+}
+
+select{
+    background-color: #E6EBE0;
+    border: solid 2px #36C9C6;
+    padding: 6px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+table {
+    text-align: center;
+    border-spacing: 6px;
+    border-collapse: separate;
+  }
+  
+
+/* Oculta el input file real */
+input[type="file"] {
+    display: none;
+}
+  
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+

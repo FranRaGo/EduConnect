@@ -194,8 +194,8 @@
                                     <button type='submit' name='scoreActivityButton' value='<?php echo htmlspecialchars($row['id']) ?>'>
                                         <img src="../../images/icons/score_icon.png" alt="Score Activity">
                                     </button>
-                                </div>
                                 </form>
+                                </div>
                                 <?php if ($error && !empty($_POST['scoreActivityButton']) && $_POST['scoreActivityButton'] === $row['id']): ?>
                                     <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                                     <?php endif; ?>
@@ -243,10 +243,14 @@
                     </select>
                     <?php } ?>
                     <div class='buttonContainer'>
-                        <input class='button' type="submit" name="editApplyProjectButton" value='Apply'>
-                        <input class='button' type="submit" name="cancelButton" value='Cancel'>
+                        <button type="submit" value="Save"  name="editApplyProjectButton">
+                            <img src="../../images/icons/save_icon.png" alt="Save">
+                        </button>
+                        <button type="submit" name="cancelButton" value='cancel'>
+                                <img src="../../images/icons/close_icon.png" alt="Back">
+                        </button>
+                    </form>
                     </div>
-                </form>
             </div>
             <?php } else if(!empty($_POST['addActivity']) || (!empty($_POST['addActivityButton']) && $error)){ ?>
                 <div class='containerAction'>
@@ -265,9 +269,9 @@
                                 <td><input type="number" name='value1' placeholder='%'></td>
                                 <td>
                                     <label for="file-upload1" class="custom-file-upload">
-                                    Upload File
-                                </label>
-                                <input id="file-upload1" type="file" name="icon1" accept="image/*"> 
+                                        Upload File
+                                    </label>
+                                    <input id="file-upload1" type="file" name="icon1" accept="image/*"> 
                                 </td>
                             </tr>
                             <tr>
@@ -275,9 +279,9 @@
                                 <td><input type="number" name='value2' placeholder='%'></td>
                                 <td>
                                     <label for="file-upload2" class="custom-file-upload">
-                                    Upload File
-                                </label>
-                                <input id="file-upload2" type="file" name="icon2" accept="image/*"> 
+                                        Upload File
+                                    </label>
+                                    <input id="file-upload2" type="file" name="icon2" accept="image/*"> 
                                 </td>                            
                             </tr>
                             <tr>
@@ -285,9 +289,9 @@
                                 <td><input type="number" name='value3' placeholder='%'></td>
                                 <td>
                                     <label for="file-upload3" class="custom-file-upload">
-                                    Upload File
-                                </label>
-                                <input id="file-upload3" type="file" name="icon3" accept="image/*"> 
+                                        Upload File
+                                    </label>
+                                    <input id="file-upload3" type="file" name="icon3" accept="image/*"> 
                                 </td>                            
                             </tr>
                             <tr>
@@ -295,21 +299,25 @@
                                 <td><input type="number" name='value4' placeholder='%'></td>
                                 <td>
                                     <label for="file-upload4" class="custom-file-upload">
-                                    Upload File
-                                </label>
-                                <input id="file-upload4" type="file" name="icon4" accept="image/*"> 
+                                        Upload File
+                                    </label>
+                                    <input id="file-upload4" type="file" name="icon4" accept="image/*"> 
                                 </td>                            
                             </tr>
                             <div class='buttonContainer'>
-                                <input class='button' type="submit" name='addActivityButton' value='Add'>
-                                <input class='button' type="submit" name="cancelButton" value='Cancel'>
+                                <button type='submit' name='addActivityButton' value='Add'>
+                                    <img src="../../images/icons/more_icon.png" alt="Add">
+                                </button>
+                                <button type="submit" name="cancelButton" value='cancel'>
+                                        <img src="../../images/icons/close_icon.png" alt="Back">
+                                </button>
                             </div>
                         </table>
-                        <?php if ($error): ?>
-                            <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
+                            <?php if ($error): ?>
+                                <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                             <?php endif; ?>
-                        </form>
-                    </div>
+                    </form>
+                </div>
                     <?php } else if(!empty($_POST['modifyActivity']) || (!empty($_POST['modifyActivityButton']) && $error)){ 
                         if(!empty($_POST['modifyActivity'])){
                             $activity = getActivity($connection,$_POST['modifyActivity']);
@@ -321,7 +329,7 @@
                         ?>
     <div class='containerAction'>
         <h2>Edit Activity</h2>
-        <form method="post" enctype="multipart/form-data">               
+        <form method="post" enctype="multipart/form-data"> 
             <input type="text" name='title' placeholder='Title' value='<?php echo htmlspecialchars($activity[1]) ?>'>
             <textarea name="description" placeholder='Description'><?php echo htmlspecialchars($activity[2]) ?></textarea>
             <?php if($activity[3]){ ?>
@@ -378,19 +386,21 @@
                     ?> <div class='buttonContainer'> <?php
                     if(!empty($_POST['modifyActivity'])){
                         ?>
-                            <button class='button' type="submit" name='modifyActivityButton' value='<?php echo htmlspecialchars($_POST['modifyActivity']) ?>'>
-                                Apply
+                            <button type="submit" name='modifyActivityButton' value='<?php echo htmlspecialchars($_POST['modifyActivity']) ?>'>
+                                <img src="../../images/icons/save_icon.png" alt="Save">
                             </button>
                             <?php
                     }else if(!empty($_POST['modifyActivityButton'])){
                         ?>
-                            <button class='button' type="submit" name='modifyActivityButton' value='<?php echo htmlspecialchars($_POST['modifyActivityButton']) ?>'>
-                                Apply
+                            <button type="submit" name='modifyActivityButton' value='<?php echo htmlspecialchars($_POST['modifyActivityButton']) ?>'>
+                                <img src="../../images/icons/save_icon.png" alt="Save">
                             </button>
                             <?php                        
                     }
                     ?>
-                <input class='button' type="submit" name="cancelButton" value='Cancel'>
+                       <button type="submit" name="cancelButton" value='cancel'>
+                            <img src="../../images/icons/close_icon.png" alt="Back">
+                        </button>
                 </div>
             </table>
             <?php if ($error): ?>
@@ -406,7 +416,8 @@
             } 
             $items = getItems($connection, $activity_id);
             ?>
-        <div class='containerAction'>
+        <div class='containerActions'>
+        <div class='scoreActivity'>
             <h2>Score Activity</h2>
             <form method="post">
                 <select name="student">
@@ -423,10 +434,10 @@
                         <div class='buttonContainer'>
                             <button class='button' type="submit" name='scoreActivity' value='<?php if(!empty($_POST['scoreActivityButton'])){echo htmlspecialchars($_POST['scoreActivityButton']);
                 }else if(!empty($_POST['scoreActivity'])){echo htmlspecialchars($_POST['scoreActivity']);} ?>'>
-                    Score
+                        <img src="../../images/icons/score_icon.png" alt="Score Activity">
                 </button>
-                <button class='button' type="submit" name="backButton" value='back'>
-                    Cancel
+                <button type="submit" name="cancelButton" value='cancel'>
+                    <img src="../../images/icons/close_icon.png" alt="Back">
                 </button>
             </div>
             <?php if ($error && !empty($_POST['scoreActivity'])): ?>
@@ -434,11 +445,12 @@
                 <?php endif; ?>    
             </div>
             </form>
-            <div class='scoreList'>
+        <div class='scoreList'>
                 <?php
             $items = getItems($connection, $activity_id);
             ?>
             <h2>Score List</h2>
+            <div class='scoreItem'>
             <?php
             while($row = mysqli_fetch_assoc($items)){
             $scores = getScores($connection,$row['id']);
@@ -449,12 +461,14 @@
                 </div>
                 <?php
                 if($scores){
+                ?>
+                <table>
+                <?php
                     while($rowScores =  mysqli_fetch_assoc($scores)){
                         
                         $student = getStudent($connection, $rowScores['student_id']);
                         
                         ?>
-                        <table>
                             <tr>
                                 <td><?php echo htmlspecialchars($student[1].' '.$student[2]) ?></td>
                                 <td><?php echo htmlspecialchars($rowScores['score']) ?></td>
@@ -466,9 +480,11 @@
                                     </form>
                                 </td>
                             </tr>    
-                        </table>
-                        <?php
+                            <?php
                     }
+                    ?>
+                    </table>
+                    <?php
                 }else{
                     ?>
                     <p>There are no scores assigned to this item</p>
@@ -478,6 +494,11 @@
             ?>
             </div>
         </div>
-    <?php } ?>
+        </div>
+        <?php } ?>
+    </div>  
+    <footer>
+        <p>Todos los derechos reservados &copy; Fran Gonzalez & Alex Muñoz</p>
+    </footer>
 </body>
 </html>

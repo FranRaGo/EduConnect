@@ -89,7 +89,7 @@
         <img class='logo' src="../../images/logo/logoWhite.png" alt="icon">
         <form method="post">
             <button type='submit' name='logoutButton' value='logout'>
-                <img src="../../images/icons/logout_icon.png" alt="Logout">
+                <img src="../../images/icons/logout_icon.png" alt="Logout" class='logout'>
             </button>
         </form>
     </header>
@@ -145,16 +145,16 @@
                 }else{
                     ?><p>There are no projects</p><?php
                 }
-
-            ?>
-            </div>
+                    ?>
+                </div>
             </form>
             <form method="post">
-                <input class='button' type="submit" name='addProjectShow' value='+'>
+                <button type='submit' name='addProjectShow' value='Add'>
+                    <img src="../../images/icons/more_icon.png" alt="Add">
+                </button>
             </form>
         </div>
-        
-        <!--<div class='actions'> -->
+        <div class='actions'>
                 <?php
                 if(!empty($_POST['addStudentButton']) || !empty($_POST['addStudentShow'])){
                 ?>
@@ -169,11 +169,15 @@
                                 <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                             <?php endif; ?>
                     </div>
-                            <div>
-                                <input class='button' type="submit" value='ADD' name='addStudentButton'>
-                                <input class='button' type='submit' name='cancelButton' value='X'>
-                            </div>
-                        </form>
+                    <div class='buttons'>
+                        <button type='submit' name='addStudentButton' value='Add'>
+                            <img src="../../images/icons/more_icon.png" alt="Add">
+                        </button>
+                        <button type="submit" name="cancelButton" value='cancel'>
+                            <img src="../../images/icons/close_icon.png" alt="Back">
+                        </button>
+                    </div>
+                    </form>
                 </div>
                 <?php
                 }else if(!empty($_POST['addProjectButton']) || !empty($_POST['addProjectShow'])){
@@ -188,10 +192,14 @@
                                     <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                                 <?php endif; ?>
                         </div>
-                            <div>
-                                <input class='button' type="submit" value='ADD' name='addProjectButton'>
-                                <input class='button' type='submit' name='cancelButton' value='X'>
-                            </div>
+                        <div class='buttons'>
+                            <button type='submit' name='addProjectButton' value='Add'>
+                                <img src="../../images/icons/more_icon.png" alt="Add">
+                            </button>
+                            <button type="submit" name="cancelButton" value='cancel'>
+                                <img src="../../images/icons/close_icon.png" alt="Back">
+                            </button>
+                        </div>
                         </form>
                     </div>
                 <?php
@@ -210,9 +218,13 @@
                                     <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                                 <?php endif; ?>
                         </div>
-                        <div>
-                                <button class="button" type="submit" value="<?php echo htmlspecialchars($_POST['editStudentShow'])?>"  name="editStudentButton">SAVE</button>
-                                <input class="button" type="submit" name="cancelButton" value="X">
+                        <div class='buttons'>
+                            <button type="submit" value="<?php echo htmlspecialchars($_POST['editStudentShow'])?>"  name="editStudentButton">
+                                <img src="../../images/icons/save_icon.png" alt="Save">
+                            </button>
+                            <button type="submit" name="cancelButton" value='cancel'>
+                                <img src="../../images/icons/close_icon.png" alt="Back">
+                            </button>
                         </div>
                         </form>
                     </div>
@@ -223,18 +235,23 @@
                         <h2>Change Profile Photo</h2>
                         <div class='action'>
                             <form method="post" enctype="multipart/form-data">                          
-                            <label for="file-upload" class="custom-file-upload">
+                                <label for="file-upload" class="custom-file-upload">
                                     Upload File
                                 </label>
-                                <input id="file-upload" type="file" name="profilePhoto" accept="image/*">                        </div>
-                                <div>
-                                    <input class='button' type="submit" name="changeProfilePhotoButton" value='SAVE'>
-                                    <input class='button' type='submit' name='cancelButton' value='X'>                          
+                                <input id="file-upload" type="file" name="profilePhoto" accept="image/*">                       
+                                <div class='buttons'>
+                                    <button type="submit" value="Save"  name="changeProfilePhotoButton">
+                                        <img src="../../images/icons/save_icon.png" alt="Save">
+                                    </button>
+                                    <button type="submit" name="cancelButton" value='cancel'>
+                                        <img src="../../images/icons/close_icon.png" alt="Back">
+                                    </button>
                                 </div>
                                 <?php if ($error): ?>
                                         <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
                                 <?php endif; ?>
                             </form>
+                        </div>    
                     </div>
                 <?php
                }else if(!empty($_POST['importButton']) || !empty($_POST['importSubmit'])){
@@ -248,9 +265,13 @@
                                 </label>
                             <input id="file-upload" type="file" name="studentsFile" accept=".csv">  
                         </div>
-                        <div>
-                            <input class='button import' type="submit" name="importSubmit" value='Import Students'>
-                            <input class='button' type='submit' name='cancelButton' value='X'>
+                        <div class='buttons'>
+                            <button type="submit" name="importSubmit" value='import'>
+                                <img src="../../images/icons/import_icon.png" alt="Import">
+                            </button>
+                            <button type="submit" name="cancelButton" value='cancel'>
+                                <img src="../../images/icons/close_icon.png" alt="Back">
+                            </button>
                         </div>
                         <?php if ($error): ?>
                                         <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
@@ -260,40 +281,47 @@
                 <?php
                 }
                 ?>
-        <!--</div>-->
+        </div>
         <div class="students">
             <h2>Students</h2>
             <form method='post'>
                 <div class='scroll'>
-                <?php
-                $students = getStudents($connection,$_SESSION['user'][6]);
-                
-                if($students != null){
-                    while($row = mysqli_fetch_assoc($students)){
-                        echo "<div class='student'>
-                        <h3>".$row['name'].' '.$row['surnames'].'</h3>
-                        <div class="sub">
-                        <button type="submit" name="deleteStudentButton" value='.$row['id'].'>
-                        <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
-                        </button>
-                        <button type="submit" name="editStudentShow" value='.$row['id'].'>
-                        <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></button>
-                        </div>
-                        </div>';
-                    }               
-                }else{
-                    ?><p>There are no students</p><?php
-                }
-                ?>
-            </div>
-        </form>
-        <form method="post">
-            <div>
-                <input class='button' type="submit" name='addStudentShow' value='+' >
-                <input class='button import' type="submit" name='importButton' value='Import Students'>
-            </div>
-        </form>
+                    <?php
+                    $students = getStudents($connection,$_SESSION['user'][6]);
+                    
+                    if($students != null){
+                        while($row = mysqli_fetch_assoc($students)){
+                            echo "<div class='student'>
+                            <h3>".$row['name'].' '.$row['surnames'].'</h3>
+                            <div class="sub">
+                            <button type="submit" name="deleteStudentButton" value='.$row['id'].'>
+                            <img src="../../images/icons/bin_icon.svg" alt="delete" style="width:20px;">
+                            </button>
+                            <button type="submit" name="editStudentShow" value='.$row['id'].'>
+                            <img src="../../images/icons/edit_icon.svg" alt="edit" style="width:20px;"></button>
+                            </div>
+                            </div>';
+                        }               
+                    }else{
+                        ?><p>There are no students</p><?php
+                    }
+                    ?>
+                </div>
+            </form>
+            <form method="post">
+                <div class='buttons'>
+                    <button type='submit' name='addStudentShow' value='Add'>
+                        <img src="../../images/icons/more_icon.png" alt="Add">
+                    </button>
+                    <button type="submit" name="importButton" value='import'>
+                        <img src="../../images/icons/import_icon.png" alt="Import">
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
-    </div>
+    <footer>
+        <p>Todos los derechos reservados &copy; Fran Gonzalez & Alex Muñoz</p>
+    </footer>
 </body>
 </html>

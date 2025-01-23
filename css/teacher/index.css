@@ -7,7 +7,7 @@
 body{
     background-color: #E6EBE0;
     font-family: Arial, sans-serif;
-
+    height: 100vh;
 }
 
 header {
@@ -16,7 +16,6 @@ header {
     padding: 10px;
     background-color: #2C3E50;
     align-items: center;
-    width: 100%;
 }
 
 .logo{
@@ -30,10 +29,12 @@ img{
 button, .button{
     background-color:#2C3E5000;
     border: 0;
+    transition: all 0.3s ease;  
 }
 
 button:hover, .button:hover{
     cursor: pointer;
+    transform: translateY(-5px); 
 }
 
 .button{
@@ -48,6 +49,12 @@ button:hover, .button:hover{
     width: 120px;
 }
 
+.buttons{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
 .profileInfo {
     display: flex;
     justify-content: space-between;
@@ -58,13 +65,15 @@ button:hover, .button:hover{
     margin-inline: 140px;
     border-radius: 10px;
     border: solid 3px #36C9C6;
+    font-size: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .profilePhoto{
     height: 150px;
     width: 150px;
     object-fit: cover;
-    border-radius: 1000px;
+    border-radius: 50%;
 }
 
 .profilePhotoSection{
@@ -88,8 +97,7 @@ button:hover, .button:hover{
     display: flex;
     justify-content: space-between;
     margin-inline: 200px;
-    height: 500px;
-
+    height: 700px;
 }
 
 .projects, .students, .actions{
@@ -110,7 +118,6 @@ button:hover, .button:hover{
     align-items: center;
     text-align: center;
     gap: 20px;
-
 }
 
 .project, .student, .action{
@@ -123,8 +130,11 @@ button:hover, .button:hover{
     padding: 15px;
     padding-top: 40px;
     width: 100%;
+    transition: box-shadow 0.3s;
+}
 
-
+.project:hover, .student:hover, .action:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .action form{
@@ -163,5 +173,16 @@ input[type="text"],  textarea{
     cursor: pointer;
 }
 
+/* Footer */
+footer {
+    background-color: #2C3E50;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    width: 100%;
+}
 
-  
+footer p {
+    margin: 0;
+}
+

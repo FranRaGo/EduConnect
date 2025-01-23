@@ -7,7 +7,6 @@
 body{
     background-color: #E6EBE0;
     font-family: Arial, sans-serif;
-
 }
 
 header {
@@ -27,22 +26,17 @@ img{
     height: 30px;
 }
 
-button, .button{
+button{
     background-color:#2C3E5000;
     border: 0;
+    transition: all 0.3s ease;  
 }
 
-button:hover, .button:hover{
+button:hover{
     cursor: pointer;
+    transform: translateY(-5px); 
 }
 
-.button{
-    background-color: #F4F1BB;
-    border: solid 3px #36C9C6;
-    border-radius: 10px;
-    width: 50px;
-    height: 50px;
-}
 
 .container{
     display: flex;
@@ -50,7 +44,6 @@ button:hover, .button:hover{
     gap: 50px;
     align-items: center;
     margin: 50px;
-
 }
 
 .containerProject{
@@ -72,7 +65,6 @@ button:hover, .button:hover{
 .buttonContainer{
     display: flex;
     justify-content: space-evenly;
-
 }
 
 .scoreList{
@@ -160,9 +152,36 @@ button:hover, .button:hover{
     border-radius: 100%;
 }
 
+.scoreItem{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.scoreItem table{
+    text-align: start;
+}
+
+.scoreItem table img{
+    height: 20px;
+}
+
+.scoreItemTitle img{
+    height: 30px;
+    width: 30px;
+
+}
+
 .scoreItemTitle{
     display: flex;
     justify-content: space-between;
+}
+
+.containerActions{
+    display: flex;
+    gap: 20px;
 }
 
 .containerAction{
@@ -175,12 +194,29 @@ button:hover, .button:hover{
     border-radius: 10px;
 }
 
-.containerAction form{
+.scoreActivity{
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background-color: #F4F1BB;
+    padding: 30px;
+    border: solid 3px #36C9C6;
+    border-radius: 10px;
+}
+
+.scoreActivity form{
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
+
+.containerAction form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 
 input[type="text"],  textarea{
@@ -190,7 +226,6 @@ input[type="text"],  textarea{
     border-radius: 10px;
     width: 200px;
     width: 100%;
-
 }
 
 input[type="number"]{
@@ -213,6 +248,8 @@ table {
     text-align: center;
     border-spacing: 6px;
     border-collapse: separate;
+    overflow: auto;
+
   }
   
 
@@ -227,3 +264,15 @@ input[type="file"] {
     cursor: pointer;
 }
 
+/* Footer */
+footer {
+    background-color: #2C3E50;
+    color: white;
+    text-align: center;
+    padding: 20px 10px;
+    width: 100%;
+}
+
+footer p {
+    margin: 0;
+}

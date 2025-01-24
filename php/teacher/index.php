@@ -98,7 +98,7 @@
             <img class='profilePhoto' src="<?php echo htmlspecialchars($profilePicture); ?>" alt="profilePicture">
             <form method="post">
                 <button type="submit" name="changeProfilePhotoShow" value="1">
-                    <img src="../../images/icons/edit_icon.svg" alt="Change">
+                    <img src="../../images/icons/edit_icon.svg" alt="Change" class='edit-icon'>
                 </button>
             </form>
         </div>

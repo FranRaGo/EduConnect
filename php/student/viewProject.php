@@ -116,8 +116,7 @@ if (!empty($_POST['backButton'])) {
         </div>
     </div>
     <footer>
-        <p>&copy; Fran Gonzalez & Alex Muñoz. Todos los derechos reservados. </p>
+        <p>Todos los derechos reservados &copy; Fran Gonzalez & Alex Muñoz</p>
     </footer>
 </body>
-
 </html>

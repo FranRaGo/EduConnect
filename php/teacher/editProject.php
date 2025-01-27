@@ -189,7 +189,7 @@
                             <div class='buttonContainer'>
                                 <form method="post">
                                     <button type='submit' name='deleteActivityButton' value='<?php echo htmlspecialchars($row['id']) ?>'>
-                                        <img src="../../images/icons/bin_icon.svg" alt="Delete Activity">
+                                        <img src="../../images/icons/bin_icon.svg" alt="delete">
                                     </button>
                                     <button type='submit' name='scoreActivityButton' value='<?php echo htmlspecialchars($row['id']) ?>'>
                                         <img src="../../images/icons/score_icon.png" alt="Score Activity">
@@ -217,7 +217,7 @@
     <div class='action'>
         <form method="post">
             <button type="submit" name="editProjectButton" value='edit'>
-                <img src="../../images/icons/edit_icon.svg" alt="delete">
+                <img src="../../images/icons/edit_icon.svg" alt="edit">
             </button>
             <button type="submit" name="backButton" value='back'>
                 <img src="../../images/icons/close_icon.png" alt="Back">

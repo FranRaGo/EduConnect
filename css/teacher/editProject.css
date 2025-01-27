@@ -253,7 +253,6 @@ table {
   }
   
 
-/* Oculta el input file real */
 input[type="file"] {
     display: none;
 }
@@ -264,7 +263,6 @@ input[type="file"] {
     cursor: pointer;
 }
 
-/* Footer */
 footer {
     background-color: #2C3E50;
     color: white;
@@ -275,4 +273,123 @@ footer {
 
 footer p {
     margin: 0;
+}
+
+/* Media Queries */
+
+/* Tablet*/
+@media screen and (max-width: 1024px) {
+    .container {
+        margin: 20px 50px;
+    }
+
+    .form-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .project-info, .project-details {
+        width: 100%;
+    }
+
+    .activity h2{
+        font-size: 20px;
+    }
+
+    input[type="text"], 
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .preview-image {
+        max-width: 300px;
+    }
+}
+
+
+
+/* Mobile*/
+@media screen and (max-width: 600px) {
+
+    header{
+        margin-bottom: 40px;
+    }
+
+    .container {
+        margin: 8px 15px;
+    }
+
+    .logo {
+        height: 100px;
+    }
+
+    h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .form-container {
+        gap: 12px;
+    }
+
+    label {
+        font-size: 13px;
+    }
+
+    .activity h2 {
+        font-size: 14px;
+    }
+
+    .activity {
+        padding: 8px;
+        gap: 8px;
+    }
+    
+    .activityRight form{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Main activity icons */
+    .activity img:not([src*="edit_icon"]), 
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+    }
+
+    /* Edit/action icons within activities */
+    .activity button img,
+    .activity .edit-icon,
+    .activity img[src*="edit_icon"],
+    .activity img[alt*="delete"],
+    .activity img[src*="score_icon"] {
+        width: 15px;
+        height: 15px;
+    }
+
+    .activity p {
+        font-size: 11px;
+        margin: 2px 0;
+    }
+
+    .activity-content {
+        gap: 4px;
+    }
+
+    .activities {
+        max-height: 410px;
+    }
+
+    .containerActions{
+        display: flex;
+        flex-direction: column;
+    }
+
+    footer{
+        margin-top: 50px;
+    }
 }

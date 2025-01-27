@@ -118,8 +118,12 @@ if (!empty($_POST['viewProject'])) {
                             <input id="file-upload" type="file" name="profilePhoto" accept="image/*"> 
                         </div>
                             <div class="buttonContainer">
-                            <button class='button' ="submit" name="changeProfilePhotoButton" value='SAVE'>SAVE</button>
-                            <button class="button" type='submit' name='cancelButton'><img src="../../images/icons/close_icon.png" alt="Cancel"></button>
+                            <button type="submit" name="changeProfilePhotoButton" value='SAVE'>
+                                <img src="../../images/icons/save_icon.png" alt="Save">
+                            </button>
+                            <button type="submit" name="cancelButton" value='cancel'>
+                                <img src="../../images/icons/close_icon.png" alt="Back">
+                            </button>
                         </div>
                         <?php if ($error): ?>
                             <p style="color:red;"><?php echo htmlspecialchars($error); ?></p>
@@ -131,8 +135,7 @@ if (!empty($_POST['viewProject'])) {
     </div>
 
     <footer>
-        <p>&copy; Fran Gonzalez & Alex Muñoz. Todos los derechos reservados. </p>
+        <p>Todos los derechos reservados &copy; Fran Gonzalez & Alex Muñoz</p>
     </footer>
 </body>
-
 </html>

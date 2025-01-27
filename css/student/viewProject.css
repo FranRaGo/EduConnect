@@ -135,4 +135,94 @@ footer {
     text-align: center;
     padding: 20px 10px;
     width: 100%;
-  }
+}
+
+
+/* Media Queries */
+
+/* Tablet*/
+@media screen and (max-width: 1024px) {
+
+
+    .project-info, .project-details {
+        width: 100%;
+    }
+
+    .activity h2{
+        font-size: 20px;
+    }
+
+    input[type="text"], 
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .preview-image {
+        max-width: 300px;
+    }
+
+    .projectContainer{
+        margin-bottom: 220px;
+    }
+        
+}
+
+
+
+/* Mobile*/
+@media screen and (max-width: 600px) {
+
+    header{
+        margin-bottom: 40px;
+    }
+
+    .container {
+        margin: 8px 15px;
+    }
+
+    .logo {
+        height: 100px;
+    }
+
+    h1 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .activity h2 {
+        font-size: 12px;
+    }
+
+    .activity {
+        padding: 8px;
+        gap: 8px;
+    }
+    
+    /* Main activity icons */
+    .activity img:not([src*="edit_icon"]), 
+    .activity-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .activity p {
+        font-size: 11px;
+        margin: 2px 0;
+    }
+
+    .activity-content {
+        gap: 4px;
+    }
+
+    .activities {
+        max-height: 405px;
+        overflow-x: hidden; 
+    }
+
+    footer{
+        margin-top: 50px;
+    }
+}
